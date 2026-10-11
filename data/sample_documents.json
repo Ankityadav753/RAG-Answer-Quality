@@ -1,0 +1,79 @@
+[
+  {
+    "id": "DOC-IT-001",
+    "title": "Campus Wi-Fi and Network Access Policy",
+    "category": "IT Services",
+    "source": "policies/it/wifi_network_access_v2.md",
+    "content": "The university provides secure high-speed wireless connectivity across all campus instructional buildings, dormitories, and library facilities. Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication. Login credentials correspond to the student Active Directory username and password. A secondary open network, 'Campus-Guest-Open', is restricted to visitors and enforces a bandwidth limit of 5 Mbps per device. Each registered student may enroll a maximum of 4 concurrent devices through the hardware registration portal at netreg.university.edu. The operation of personal wireless routers, unauthorized access points, rogue DHCP servers, or packet interception hardware (such as Wi-Fi Pineapples) in residence halls is strictly prohibited and subject to immediate network port suspension."
+  },
+  {
+    "id": "DOC-IT-002",
+    "title": "Student Email Accounts and Cloud Storage Quotas",
+    "category": "IT Services",
+    "source": "policies/it/student_email_storage_2026.md",
+    "content": "All matriculated students are assigned an official institutional email address formatted as username@student.university.edu. Undergraduates receive a pooled cloud storage quota of 50 GB across email and associated cloud drives. Postgraduate researchers and doctoral candidates receive an expanded quota of 100 GB upon departmental endorsement. Inbound and outbound email attachments are capped at a maximum of 35 MB per transmission; files exceeding 35 MB must be shared via university OneDrive or Google Drive download links. Student email accounts that remain inactive with zero logins for 180 consecutive days are automatically flagged for deactivation. After a 30-day grace notification sent to the student's secondary emergency contact, unaccessed accounts are permanently deleted."
+  },
+  {
+    "id": "DOC-IT-003",
+    "title": "High-Performance Computing (HPC) Titan Cluster Guidelines",
+    "category": "IT Services",
+    "source": "policies/it/hpc_cluster_regulations.md",
+    "content": "The Division of Advanced Research Computing operates the 'Titan-HPC' computing cluster, housed in the Turing Hall Data Center (Room DH-104). Workload scheduling is managed strictly via Slurm. The cluster includes two primary queues: the 'gpu-a100' partition equipped with NVIDIA A100 80GB tensor core units, and the 'cpu-standard' partition. The maximum wall-time for a single batch job on the 'gpu-a100' partition is 24 hours, whereas 'cpu-standard' jobs may execute for up to 72 hours. Student researchers must submit authorization form HPC-REQ-2026 co-signed by their faculty advisor to obtain access keys. Individual researchers are capped at 2 concurrent running GPU jobs to maintain equitable queue availability across research groups."
+  },
+  {
+    "id": "DOC-IT-004",
+    "title": "Information Security and Multi-Factor Authentication Standards",
+    "category": "IT Services",
+    "source": "policies/it/infosec_mfa_standards.md",
+    "content": "University IT Security mandates that all student and employee accounts adhere to enterprise password standards. Passwords must contain a minimum of 14 characters, incorporating at least one uppercase letter, one lowercase letter, one numeric digit, and one special symbol. Passwords automatically expire and require rotation every 120 days. Multi-Factor Authentication (MFA) is compulsory for all logins to university systems, delivered exclusively via Duo Mobile push notifications or physical hardware security keys (FIDO2/YubiKey). SMS text message verification was deprecated in August 2025 due to SIM-swapping vulnerabilities. If an account encounters 5 consecutive failed authentication attempts, it enters a temporary lockout state for 30 minutes. Emergency unlocks require contacting the IT Helpdesk at extension 4357 or helpdesk@university.edu."
+  },
+  {
+    "id": "DOC-ACAD-001",
+    "title": "Course Registration, Add/Drop, and Tuition Refund Schedule",
+    "category": "Academic Policies",
+    "source": "policies/academic/registration_refund_schedule.md",
+    "content": "Students may adjust their semester schedule without academic or financial penalty through the official Add/Drop deadline, which falls at 11:59 PM on Friday of Week 2 of the academic semester. Courses dropped by this deadline qualify for a 100% tuition refund and will not appear on the official transcript. Following Week 2, students may withdraw from a course through Friday of Week 8, receiving a neutral grade of 'W'; no tuition refund is granted for course withdrawals. Undergraduates are restricted to a career maximum of 4 course withdrawals ('W' grades) throughout their degree program. Emergency late withdrawals ('WE') beyond Week 8 require petition form ACAD-PET-08 approved by the Academic Affairs Board, backed by certified medical documentation submitted within 14 calendar days of the qualifying event."
+  },
+  {
+    "id": "DOC-ACAD-002",
+    "title": "Coursework Submission Deadlines, Late Penalties, and Grace Periods",
+    "category": "Academic Policies",
+    "source": "policies/academic/coursework_late_policy.md",
+    "content": "All academic assignments, problem sets, and laboratory write-ups must be submitted through the university Canvas LMS portal by the time designated on the course syllabus. A standard automated 15-minute grace period is applied systematically to all electronic submissions to accommodate minor network latency or upload delays. Submissions completed after this 15-minute window are assessed a late penalty of 10% of the total possible marks for each 24-hour period (or fraction thereof) beyond the deadline. No assignment will be accepted more than 72 hours (3 calendar days) after the original submission deadline; work submitted past 72 hours automatically receives a mark of zero. Requests for medical extensions must include a verified clinic note and be submitted through the student portal within 48 hours of the deadline."
+  },
+  {
+    "id": "DOC-ACAD-003",
+    "title": "Academic Integrity and Artificial Intelligence Usage Code",
+    "category": "Academic Policies",
+    "source": "policies/academic/academic_integrity_ai_2026.md",
+    "content": "The university's academic honesty policy is governed by code 'POLICY-AI-2026'. Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus. Uncredited submission of AI-generated prose, solutions, or source code constitutes Category 2 Academic Misconduct. A first violation results in an automatic score of zero on the affected assignment, along with mandatory completion of the non-credit Academic Integrity Workshop (AIW-01) within 21 calendar days. A second violation results in an automatic course failure with an 'F' grade and immediate referral to the Faculty Honor Council for disciplinary probation or suspension proceedings."
+  },
+  {
+    "id": "DOC-ACAD-004",
+    "title": "Undergraduate Final Grade Appeal Protocol",
+    "category": "Academic Policies",
+    "source": "policies/academic/grade_appeal_procedure.md",
+    "content": "Students wishing to contest a final posted course grade must follow a structured three-stage appeal process. Stage 1 requires initiating an informal discussion with the instructor of record within 10 business days following official final grade publication in the registrar portal. If informal resolution fails, Stage 2 permits the student to file a formal appeal to the Department Chair using petition form GR-APP-01 within 15 business days of the instructor's written response. If the student demonstrates procedural error or demonstrable grading bias, Stage 3 allows an escalation to the Dean's Academic Review Board within 7 business days of the Department Chair's ruling. The decision of the Dean's Board is final and binding. Legitimate grounds for appeal are restricted to mathematical calculation errors, deviations from published grading rubrics, or proven bias; disagreement with pedagogical grading standards does not constitute valid grounds."
+  },
+  {
+    "id": "DOC-LIB-001",
+    "title": "Babbage Memorial Library Borrowing and Equipment Lending",
+    "category": "Library & Research",
+    "source": "policies/library/borrowing_equipment_lending.md",
+    "content": "Undergraduate students in good standing may borrow up to 20 physical books concurrently from the Babbage Memorial Library collection for a standard loan period of 28 days per item, renewable up to two times online if no hold has been placed by another patron. In addition to books, the library Circulation Desk provides short-term technology loans, including Dell XPS 15 laptops, graphing calculators, and iPad Pro tablets. Technology loans have a strict 72-hour checkout limit and cannot be renewed. Overdue technology checkouts incur an overdue penalty fee of $15.00 per day, capped at a maximum equipment replacement fee of $1,200. Interlibrary Loan (ILL) requests are limited to 10 active requests per student per month, with typical fulfillment turnaround of 3 to 5 business days."
+  },
+  {
+    "id": "DOC-FAC-001",
+    "title": "Lovelace Engineering Center MakerSpace Safety and Usage Rules",
+    "category": "Campus Facilities",
+    "source": "policies/facilities/makerspace_lab_rules.md",
+    "content": "The student MakerSpace is situated in the Lovelace Engineering Center, Room LC-205. Access is restricted to students who have completed the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person equipment walkthrough. Operating hours during regular academic terms are Monday through Friday from 08:00 to 22:00, Saturday from 10:00 to 18:00, and closed on Sundays and university holidays. Basic 3D printing utilizing standard PLA and PETG filament is subsidized at $0.05 per gram; custom resins or high-temperature polymers require prior approval from the Lab Supervisor. Advanced fabrication machinery, specifically the CNC mill and 100W CO2 laser cutter, requires specialized Red Badge certification and requires a minimum 2-person buddy system to be active in the room at all times during operation."
+  },
+  {
+    "id": "DOC-FAC-002",
+    "title": "Campus Parking Permits, Electric Vehicle Charging, and Violations",
+    "category": "Campus Facilities",
+    "source": "policies/facilities/parking_transportation_rules.md",
+    "content": "All motor vehicles parked on university property must display an active electronic parking permit registered to the vehicle's license plate. Semester permit rates are established as: Zone A (Resident Students) at $280 per semester, Zone B (Commuter Students) at $190 per semester, and Motorcycle permits at $60 per semester. The university provides 16 Level-2 ChargePoint Electric Vehicle (EV) charging stations distributed between Lot K and Parking Structure 3. EV charging is complimentary for the initial 4 hours for vehicles holding a valid semester permit; an overtime occupancy fee of $5.00 per hour applies thereafter to promote turnover. Parking violation citations must be paid or formally contested online at parking.university.edu/appeal within 14 calendar days of citation issuance; citations not addressed within 14 days incur a $25 late administrative charge."
+  }
+]

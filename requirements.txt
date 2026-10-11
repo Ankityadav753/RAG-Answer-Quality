@@ -1,0 +1,5 @@
+pytest>=8.0.0
+numpy>=2.0.0
+
+# Optional production embedding library (if using real HuggingFace / PyTorch sentence-transformers):
+# sentence-transformers>=3.0.0

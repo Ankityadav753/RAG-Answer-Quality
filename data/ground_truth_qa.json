@@ -1,0 +1,277 @@
+[
+  {
+    "id": "Q-01",
+    "question": "What is the primary WPA3 wireless network SSID for students, and what is the maximum number of concurrent registered devices allowed per student?",
+    "expected_answer": "The primary network SSID is 'Campus-Secure-5G' (using WPA3-Enterprise), and each registered student is permitted a maximum of 4 concurrent devices.",
+    "relevant_doc_ids": ["DOC-IT-001"],
+    "question_type": "keyword_identifier",
+    "is_answerable": true,
+    "key_facts": [
+      "SSID: Campus-Secure-5G",
+      "WPA3-Enterprise",
+      "Maximum 4 concurrent registered devices per student"
+    ]
+  },
+  {
+    "id": "Q-02",
+    "question": "What authorization form is required to gain access to the Titan-HPC GPU computing cluster, and where is the cluster located?",
+    "expected_answer": "Students must submit authorization form HPC-REQ-2026 co-signed by their faculty advisor. The Titan-HPC cluster is located in the Turing Hall Data Center, Room DH-104.",
+    "relevant_doc_ids": ["DOC-IT-003"],
+    "question_type": "keyword_identifier",
+    "is_answerable": true,
+    "key_facts": [
+      "Form HPC-REQ-2026",
+      "Co-signed by faculty advisor",
+      "Turing Hall Data Center, Room DH-104"
+    ]
+  },
+  {
+    "id": "Q-03",
+    "question": "Under policy code POLICY-AI-2026, what penalties are applied to a student for a first academic misconduct violation regarding generative artificial intelligence?",
+    "expected_answer": "A first violation results in an automatic score of zero on the affected assignment and mandatory completion of the non-credit Academic Integrity Workshop (AIW-01) within 21 calendar days.",
+    "relevant_doc_ids": ["DOC-ACAD-003"],
+    "question_type": "keyword_identifier",
+    "is_answerable": true,
+    "key_facts": [
+      "Policy code POLICY-AI-2026",
+      "Automatic score of zero on assignment",
+      "Mandatory completion of Academic Integrity Workshop (AIW-01) within 21 calendar days"
+    ]
+  },
+  {
+    "id": "Q-04",
+    "question": "What form must be submitted for a Stage 2 formal final grade appeal, and to whom is it submitted?",
+    "expected_answer": "A student must submit petition form GR-APP-01 to the Department Chair within 15 business days of the instructor's written response.",
+    "relevant_doc_ids": ["DOC-ACAD-004"],
+    "question_type": "keyword_identifier",
+    "is_answerable": true,
+    "key_facts": [
+      "Form GR-APP-01",
+      "Submitted to Department Chair",
+      "Deadline: within 15 business days"
+    ]
+  },
+  {
+    "id": "Q-05",
+    "question": "Where is the student MakerSpace located on campus, and which training module is required for initial badge access?",
+    "expected_answer": "The MakerSpace is located in Lovelace Engineering Center, Room LC-205. Access requires completing the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person walkthrough.",
+    "relevant_doc_ids": ["DOC-FAC-001"],
+    "question_type": "keyword_identifier",
+    "is_answerable": true,
+    "key_facts": [
+      "Lovelace Engineering Center, Room LC-205",
+      "Green Badge Safety Training (ENGR-SAFE-101)",
+      "In-person equipment walkthrough"
+    ]
+  },
+  {
+    "id": "Q-06",
+    "question": "How much pooled cloud storage is allocated to undergraduate students, and what is the allocation for postgraduate researchers?",
+    "expected_answer": "Undergraduates receive 50 GB of pooled cloud storage, while postgraduate researchers and doctoral candidates receive 100 GB upon departmental endorsement.",
+    "relevant_doc_ids": ["DOC-IT-002"],
+    "question_type": "numerical_policy",
+    "is_answerable": true,
+    "key_facts": [
+      "50 GB pooled cloud storage for undergraduates",
+      "100 GB for postgraduate researchers / doctoral candidates"
+    ]
+  },
+  {
+    "id": "Q-07",
+    "question": "What is the daily penalty percentage for submitting an assignment late, and what is the maximum late submission cutoff after which work receives zero?",
+    "expected_answer": "The penalty is 10% of total possible marks per 24-hour period (or fraction thereof). Assignments submitted beyond 72 hours (3 calendar days) after the deadline receive an automatic score of zero.",
+    "relevant_doc_ids": ["DOC-ACAD-002"],
+    "question_type": "numerical_policy",
+    "is_answerable": true,
+    "key_facts": [
+      "10% deduction per 24-hour period",
+      "72-hour (3-day) absolute cutoff",
+      "Zero score after 72 hours"
+    ]
+  },
+  {
+    "id": "Q-08",
+    "question": "After how many consecutive days of zero login activity is a student email account flagged for deactivation, and what is the maximum email attachment size limit?",
+    "expected_answer": "Student email accounts are flagged after 180 consecutive days of inactivity. Email attachments are capped at a maximum of 35 MB per transmission.",
+    "relevant_doc_ids": ["DOC-IT-002"],
+    "question_type": "numerical_policy",
+    "is_answerable": true,
+    "key_facts": [
+      "180 consecutive days of inactivity",
+      "35 MB maximum attachment size"
+    ]
+  },
+  {
+    "id": "Q-09",
+    "question": "What is the minimum character length required for passwords, and how often must passwords be changed according to the information security policy?",
+    "expected_answer": "Passwords must have a minimum of 14 characters and must be rotated every 120 days.",
+    "relevant_doc_ids": ["DOC-IT-004"],
+    "question_type": "numerical_policy",
+    "is_answerable": true,
+    "key_facts": [
+      "Minimum 14 characters",
+      "Rotated every 120 days"
+    ]
+  },
+  {
+    "id": "Q-10",
+    "question": "What is the daily overdue fine for borrowed technology laptops from the library, and what is the maximum replacement fee?",
+    "expected_answer": "Overdue technology loans incur a fine of $15.00 per day, capped at a maximum replacement fee of $1,200.",
+    "relevant_doc_ids": ["DOC-LIB-001"],
+    "question_type": "numerical_policy",
+    "is_answerable": true,
+    "key_facts": [
+      "$15.00 per day overdue penalty",
+      "Maximum replacement fee of $1,200"
+    ]
+  },
+  {
+    "id": "Q-11",
+    "question": "How many hours of electric vehicle charging are provided free of charge with a valid semester permit, and what is the hourly rate thereafter?",
+    "expected_answer": "EV charging is free for the initial 4 hours with a valid semester permit, and $5.00 per hour thereafter.",
+    "relevant_doc_ids": ["DOC-FAC-002"],
+    "question_type": "numerical_policy",
+    "is_answerable": true,
+    "key_facts": [
+      "First 4 hours complimentary",
+      "$5.00 per hour overtime fee thereafter"
+    ]
+  },
+  {
+    "id": "Q-12",
+    "question": "Within how many calendar days must a student pay or contest a parking violation citation to avoid a late fee, and how much is the late administrative charge?",
+    "expected_answer": "Citations must be paid or contested within 14 calendar days of issuance. Unaddressed citations incur a $25 late administrative charge.",
+    "relevant_doc_ids": ["DOC-FAC-002"],
+    "question_type": "numerical_policy",
+    "is_answerable": true,
+    "key_facts": [
+      "Within 14 calendar days",
+      "$25 late administrative fee"
+    ]
+  },
+  {
+    "id": "Q-13",
+    "question": "Until what point in the academic term can an undergraduate drop a class to get a full 100% refund on tuition?",
+    "expected_answer": "Students must drop the course by the official Add/Drop deadline at 11:59 PM on Friday of Week 2 to receive a 100% tuition refund.",
+    "relevant_doc_ids": ["DOC-ACAD-001"],
+    "question_type": "semantic_paraphrase",
+    "is_answerable": true,
+    "key_facts": [
+      "Friday of Week 2",
+      "11:59 PM deadline",
+      "100% tuition refund"
+    ]
+  },
+  {
+    "id": "Q-14",
+    "question": "Is there any automatic tolerance buffer provided when uploading assignments on Canvas in case of an unexpected internet glitch?",
+    "expected_answer": "Yes, an automated 15-minute grace period is systematically applied to all Canvas LMS electronic submissions to accommodate minor network latency or upload delays.",
+    "relevant_doc_ids": ["DOC-ACAD-002"],
+    "question_type": "semantic_paraphrase",
+    "is_answerable": true,
+    "key_facts": [
+      "15-minute automated grace period",
+      "Accommodates network latency and upload delays"
+    ]
+  },
+  {
+    "id": "Q-15",
+    "question": "Can university community members still use SMS text messages to verify their identity for multi-factor login?",
+    "expected_answer": "No, SMS text verification was deprecated in August 2025 due to SIM-swapping risks. Verification must be performed via Duo Mobile push notifications or physical hardware security keys (FIDO2/YubiKey).",
+    "relevant_doc_ids": ["DOC-IT-004"],
+    "question_type": "semantic_paraphrase",
+    "is_answerable": true,
+    "key_facts": [
+      "SMS verification deprecated in August 2025",
+      "Duo Mobile push or hardware security keys required"
+    ]
+  },
+  {
+    "id": "Q-16",
+    "question": "Am I allowed to install my own personal wireless router or Wi-Fi range extender in my dorm room?",
+    "expected_answer": "No, the operation of personal wireless routers, unauthorized access points, rogue DHCP servers, or Wi-Fi Pineapples in residence halls is strictly prohibited and leads to immediate network port suspension.",
+    "relevant_doc_ids": ["DOC-IT-001"],
+    "question_type": "semantic_paraphrase",
+    "is_answerable": true,
+    "key_facts": [
+      "Personal wireless routers and unauthorized APs strictly prohibited",
+      "Subject to immediate port suspension"
+    ]
+  },
+  {
+    "id": "Q-17",
+    "question": "What disciplinary sanction happens if a student commits a second infraction involving unauthorized artificial intelligence tool usage?",
+    "expected_answer": "A second violation results in an automatic course failure with an 'F' grade and immediate referral to the Faculty Honor Council for disciplinary probation or suspension proceedings.",
+    "relevant_doc_ids": ["DOC-ACAD-003"],
+    "question_type": "semantic_paraphrase",
+    "is_answerable": true,
+    "key_facts": [
+      "Automatic course failure ('F' grade)",
+      "Referral to Faculty Honor Council for disciplinary probation/suspension"
+    ]
+  },
+  {
+    "id": "Q-18",
+    "question": "How many books can an undergraduate check out from Babbage Library at a time, and what is the standard borrowing duration?",
+    "expected_answer": "Undergraduates may borrow up to 20 physical books concurrently for a standard loan period of 28 days per item, renewable up to two times.",
+    "relevant_doc_ids": ["DOC-LIB-001"],
+    "question_type": "semantic_paraphrase",
+    "is_answerable": true,
+    "key_facts": [
+      "Up to 20 physical books",
+      "Standard loan period of 28 days",
+      "Renewable up to two times"
+    ]
+  },
+  {
+    "id": "Q-19",
+    "question": "What specialized qualification and supervision requirements apply to operating the CNC milling machine or high-powered laser cutter in the engineering workshop?",
+    "expected_answer": "Operating the CNC mill and 100W CO2 laser cutter requires specialized Red Badge certification and requires a minimum 2-person buddy system active in the room at all times during operation.",
+    "relevant_doc_ids": ["DOC-FAC-001"],
+    "question_type": "semantic_paraphrase",
+    "is_answerable": true,
+    "key_facts": [
+      "Red Badge certification",
+      "Mandatory 2-person buddy system active at all times"
+    ]
+  },
+  {
+    "id": "Q-20",
+    "question": "What is the per-diem meal reimbursement rate for graduate students presenting research papers at academic conferences?",
+    "expected_answer": "The provided knowledge base documents do not contain information regarding conference travel allowances or per-diem meal reimbursement policies. The system should abstain from answering.",
+    "relevant_doc_ids": [],
+    "question_type": "unanswerable_abstention",
+    "is_answerable": false,
+    "key_facts": [
+      "Out of domain",
+      "Information not provided in corpus",
+      "System must abstain"
+    ]
+  },
+  {
+    "id": "Q-21",
+    "question": "How many total semester credit hours are required to earn a Bachelor of Science degree in Cybersecurity?",
+    "expected_answer": "The provided policy documents do not specify degree graduation credit requirements or curriculum details for a Bachelor of Science in Cybersecurity. The system should abstain from answering.",
+    "relevant_doc_ids": [],
+    "question_type": "unanswerable_abstention",
+    "is_answerable": false,
+    "key_facts": [
+      "Out of domain",
+      "Credit hour requirements not specified in corpus",
+      "System must abstain"
+    ]
+  },
+  {
+    "id": "Q-22",
+    "question": "What are the recreational swimming pool lane hours and lap reservation rules at the campus aquatic center?",
+    "expected_answer": "The provided documents do not contain any information regarding the campus aquatic center, lap reservation rules, or recreation pool operating hours. The system should abstain from answering.",
+    "relevant_doc_ids": [],
+    "question_type": "unanswerable_abstention",
+    "is_answerable": false,
+    "key_facts": [
+      "Out of domain",
+      "Campus pool rules not in corpus",
+      "System must abstain"
+    ]
+  }
+]

@@ -1,0 +1,1193 @@
+{
+  "timestamp": "2026-10-11T23:03:46.169744",
+  "database_path": "C:\\Users\\ankit\\Desktop\\Rag-Answer-Quality\\db\\rag_bench.db",
+  "top_k": 3,
+  "configurations": {
+    "lexical_fts5": {
+      "config_name": "lexical_fts5",
+      "top_k": 3,
+      "total_queries": 22,
+      "answerable_queries": 19,
+      "unanswerable_queries": 3,
+      "mean_precision_at_k_answerable": 0.579,
+      "mean_recall_at_k_answerable": 1.0,
+      "mrr_answerable": 0.9737,
+      "mean_precision_at_k_all": 0.5,
+      "mean_recall_at_k_all": 0.8636,
+      "mrr_all": 0.8409,
+      "mean_groundedness": 1.0,
+      "mean_latency_ms": 1.22,
+      "abstention_metrics": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "tn": 19,
+        "precision": 1.0,
+        "recall": 0.3333,
+        "f1": 0.5,
+        "accuracy": 0.9091
+      },
+      "per_query_results": [
+        {
+          "query_id": "Q-01",
+          "query_text": "What is the primary WPA3 wireless network SSID for students, and what is the maximum number of concurrent registered devices allowed per student?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-001_chk_00",
+            "DOC-IT-001_chk_01",
+            "DOC-FAC-002_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-001",
+            "DOC-IT-001",
+            "DOC-FAC-002"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Each registered student may enroll a maximum of 4 concurrent devices through the hardware registration portal\n\n\n5 Mbps per device. Each registered student may enroll a maximum of 4 concurrent devices through the hardware registration portal at netreg.university.edu.",
+          "latency_ms": 1.77
+        },
+        {
+          "query_id": "Q-02",
+          "query_text": "What authorization form is required to gain access to the Titan-HPC GPU computing cluster, and where is the cluster located?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-003"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-003_chk_00",
+            "DOC-IT-003_chk_01",
+            "DOC-IT-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-003",
+            "DOC-IT-003",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "The Division of Advanced Research Computing operates the 'Titan-HPC' computing cluster, housed in the Turing Hall Data Center (Room DH-104). Student researchers must submit authorization form HPC-REQ-2026 co-signed by their faculty advisor to obtain access keys.",
+          "latency_ms": 1.1
+        },
+        {
+          "query_id": "Q-03",
+          "query_text": "Under policy code POLICY-AI-2026, what penalties are applied to a student for a first academic misconduct violation regarding generative artificial intelligence?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-003"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-003_chk_00",
+            "DOC-ACAD-002_chk_00",
+            "DOC-ACAD-003_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-003",
+            "DOC-ACAD-002",
+            "DOC-ACAD-003"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "The university's academic honesty policy is governed by code 'POLICY-AI-2026'. Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus.",
+          "latency_ms": 1.32
+        },
+        {
+          "query_id": "Q-04",
+          "query_text": "What form must be submitted for a Stage 2 formal final grade appeal, and to whom is it submitted?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-004"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-004_chk_00",
+            "DOC-ACAD-004_chk_01",
+            "DOC-ACAD-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-004",
+            "DOC-ACAD-004",
+            "DOC-ACAD-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Students wishing to contest a final posted course grade must follow a structured three-stage appeal process. If informal resolution fails, Stage 2 permits the student to file a formal appeal to the Department Chair using petition form GR-APP-01 within 15 business days of the instructor's written response.",
+          "latency_ms": 1.74
+        },
+        {
+          "query_id": "Q-05",
+          "query_text": "Where is the student MakerSpace located on campus, and which training module is required for initial badge access?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-001_chk_00",
+            "DOC-IT-001_chk_00",
+            "DOC-FAC-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-001",
+            "DOC-IT-001",
+            "DOC-FAC-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Access is restricted to students who have completed the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person equipment walkthrough. The student MakerSpace is situated in the Lovelace Engineering Center, Room LC-205.",
+          "latency_ms": 1.72
+        },
+        {
+          "query_id": "Q-06",
+          "query_text": "How much pooled cloud storage is allocated to undergraduate students, and what is the allocation for postgraduate researchers?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-002_chk_00",
+            "DOC-LIB-001_chk_00",
+            "DOC-IT-003_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-002",
+            "DOC-LIB-001",
+            "DOC-IT-003"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Undergraduates receive a pooled cloud storage quota of 50 GB across email and associated cloud drives. Postgraduate researchers and doctoral candidates receive an expanded quota of 100 GB upon departmental endorsement.",
+          "latency_ms": 1.15
+        },
+        {
+          "query_id": "Q-07",
+          "query_text": "What is the daily penalty percentage for submitting an assignment late, and what is the maximum late submission cutoff after which work receives zero?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-002_chk_01",
+            "DOC-ACAD-002_chk_00",
+            "DOC-ACAD-003_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-002",
+            "DOC-ACAD-002",
+            "DOC-ACAD-003"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "No assignment will be accepted more than 72 hours (3 calendar days) after the original submission deadline; work submitted past 72 hours automatically receives a mark of zero. Submissions completed after this 15-minute window are assessed a late penalty of 10% of the total possible marks for each 24-hour period (or fraction thereof) beyond the deadline.",
+          "latency_ms": 1.17
+        },
+        {
+          "query_id": "Q-08",
+          "query_text": "After how many consecutive days of zero login activity is a student email account flagged for deactivation, and what is the maximum email attachment size limit?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-002_chk_01",
+            "DOC-IT-002_chk_00",
+            "DOC-IT-004_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-002",
+            "DOC-IT-002",
+            "DOC-IT-004"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Student email accounts that remain inactive with zero logins for 180 consecutive days are automatically flagged for deactivation. After a 30-day grace notification sent to the student's secondary emergency contact, unaccessed accounts are permanently deleted.",
+          "latency_ms": 1.15
+        },
+        {
+          "query_id": "Q-09",
+          "query_text": "What is the minimum character length required for passwords, and how often must passwords be changed according to the information security policy?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-004"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-004_chk_00",
+            "DOC-ACAD-003_chk_00",
+            "DOC-FAC-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-004",
+            "DOC-ACAD-003",
+            "DOC-FAC-001"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Passwords must contain a minimum of 14 characters, incorporating at least one uppercase letter, one lowercase letter, one numeric digit, and one special symbol. University IT Security mandates that all student and employee accounts adhere to enterprise password standards.",
+          "latency_ms": 1.04
+        },
+        {
+          "query_id": "Q-10",
+          "query_text": "What is the daily overdue fine for borrowed technology laptops from the library, and what is the maximum replacement fee?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-LIB-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-LIB-001_chk_01",
+            "DOC-LIB-001_chk_00",
+            "DOC-IT-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-LIB-001",
+            "DOC-LIB-001",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Overdue technology checkouts incur an overdue penalty fee of $15.00 per day, capped at a maximum equipment replacement fee of $1,200. In addition to books, the library Circulation Desk provides short-term technology loans, including Dell XPS 15 laptops, graphing calculators, and iPad Pro tablets.",
+          "latency_ms": 1.01
+        },
+        {
+          "query_id": "Q-11",
+          "query_text": "How many hours of electric vehicle charging are provided free of charge with a valid semester permit, and what is the hourly rate thereafter?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-002_chk_00",
+            "DOC-FAC-002_chk_01",
+            "DOC-ACAD-004_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-002",
+            "DOC-FAC-002",
+            "DOC-ACAD-004"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "EV charging is complimentary for the initial 4 hours for vehicles holding a valid semester permit; an overtime occupancy fee of $5.00 per hour applies thereafter to promote turnover. Semester permit rates are established as: Zone A (Resident Students) at $280 per semester, Zone B (Commuter Students) at $190 per semester, and Motorcycle permits at $60 per semester.",
+          "latency_ms": 1.05
+        },
+        {
+          "query_id": "Q-12",
+          "query_text": "Within how many calendar days must a student pay or contest a parking violation citation to avoid a late fee, and how much is the late administrative charge?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-002_chk_01",
+            "DOC-ACAD-001_chk_01",
+            "DOC-ACAD-003_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-002",
+            "DOC-ACAD-001",
+            "DOC-ACAD-003"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Parking violation citations must be paid or formally contested online at parking.university.edu/appeal within 14 calendar days of citation issuance; citations not addressed within 14 days incur a $25 late administrative charge. Emergency late withdrawals ('WE') beyond Week 8 require petition form ACAD-PET-08 approved by the Academic Affairs Board, backed by certified medical documentation submitted within 14 calendar days of the qualifying event.",
+          "latency_ms": 1.04
+        },
+        {
+          "query_id": "Q-13",
+          "query_text": "Until what point in the academic term can an undergraduate drop a class to get a full 100% refund on tuition?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-001_chk_00",
+            "DOC-ACAD-001_chk_01",
+            "DOC-LIB-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-001",
+            "DOC-ACAD-001",
+            "DOC-LIB-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Courses dropped by this deadline qualify for a 100% tuition refund and will not appear on the official transcript. Undergraduates are restricted\n\n\nof Week 8, receiving a neutral grade of 'W'; no tuition refund is granted for course withdrawals.",
+          "latency_ms": 1.06
+        },
+        {
+          "query_id": "Q-14",
+          "query_text": "Is there any automatic tolerance buffer provided when uploading assignments on Canvas in case of an unexpected internet glitch?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-003_chk_00",
+            "DOC-ACAD-002_chk_00",
+            "DOC-ACAD-003_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-003",
+            "DOC-ACAD-002",
+            "DOC-ACAD-003"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "A first violation results in an automatic score of zero on the affected assignment, along with mandatory completion of the non-credit Academic Integrity Workshop (AIW-01) within 21 calendar days. All academic assignments, problem sets, and laboratory write-ups must be submitted through the university Canvas LMS portal by the time designated on the course syllabus.",
+          "latency_ms": 0.96
+        },
+        {
+          "query_id": "Q-15",
+          "query_text": "Can university community members still use SMS text messages to verify their identity for multi-factor login?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-004"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-004_chk_00",
+            "DOC-IT-004_chk_01",
+            "DOC-IT-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-004",
+            "DOC-IT-004",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Multi-Factor Authentication (MFA) is compulsory for all logins to university systems, delivered exclusively via Duo Mobile push notifications or physical hardware security keys (FIDO2/YubiKey). SMS text message verification was deprecated in August\n\n\nexclusively via Duo Mobile push notifications or physical hardware security keys (FIDO2/YubiKey).",
+          "latency_ms": 1.01
+        },
+        {
+          "query_id": "Q-16",
+          "query_text": "Am I allowed to install my own personal wireless router or Wi-Fi range extender in my dorm room?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-001_chk_01",
+            "DOC-IT-001_chk_00",
+            "DOC-FAC-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-001",
+            "DOC-IT-001",
+            "DOC-FAC-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "The operation of personal wireless routers, unauthorized access points, rogue DHCP servers, or packet interception hardware (such as Wi-Fi Pineapples) in residence halls is strictly prohibited and subject to immediate network port suspension.",
+          "latency_ms": 0.95
+        },
+        {
+          "query_id": "Q-17",
+          "query_text": "What disciplinary sanction happens if a student commits a second infraction involving unauthorized artificial intelligence tool usage?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-003"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-003_chk_01",
+            "DOC-ACAD-003_chk_00",
+            "DOC-IT-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-003",
+            "DOC-ACAD-003",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "A second violation results in an automatic course failure with an 'F' grade and immediate referral to the Faculty Honor Council for disciplinary probation or suspension proceedings. Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus.",
+          "latency_ms": 1.24
+        },
+        {
+          "query_id": "Q-18",
+          "query_text": "How many books can an undergraduate check out from Babbage Library at a time, and what is the standard borrowing duration?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-LIB-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-LIB-001_chk_00",
+            "DOC-IT-003_chk_00",
+            "DOC-ACAD-002_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-LIB-001",
+            "DOC-IT-003",
+            "DOC-ACAD-002"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Undergraduate students in good standing may borrow up to 20 physical books concurrently from the Babbage Memorial Library collection for a standard loan period of 28 days per item, renewable up to two times online if no hold has been placed by another patron. In addition to books, the library Circulation Desk provides short-term technology loans, including Dell XPS 15 laptops, graphing calculators, and iPad Pro tablets.",
+          "latency_ms": 1.81
+        },
+        {
+          "query_id": "Q-19",
+          "query_text": "What specialized qualification and supervision requirements apply to operating the CNC milling machine or high-powered laser cutter in the engineering workshop?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-001_chk_01",
+            "DOC-FAC-001_chk_00",
+            "DOC-ACAD-003_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-001",
+            "DOC-FAC-001",
+            "DOC-ACAD-003"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Advanced fabrication machinery, specifically the CNC mill and 100W CO2 laser cutter, requires specialized Red Badge certification and requires a minimum 2-person buddy system to be active in the room at all times during operation.",
+          "latency_ms": 1.35
+        },
+        {
+          "query_id": "Q-20",
+          "query_text": "What is the per-diem meal reimbursement rate for graduate students presenting research papers at academic conferences?",
+          "question_type": "unanswerable_abstention",
+          "is_answerable_ground_truth": false,
+          "relevant_doc_ids": [],
+          "retrieved_chunk_ids": [
+            "DOC-IT-003_chk_01",
+            "DOC-IT-003_chk_00",
+            "DOC-ACAD-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-003",
+            "DOC-IT-003",
+            "DOC-ACAD-001"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Student researchers must submit authorization form HPC-REQ-2026\n\n\nStudents may adjust their semester schedule without academic or financial penalty through the official Add/Drop deadline, which falls at 11:59 PM on Friday of Week 2 of the academic semester.",
+          "latency_ms": 1.16
+        },
+        {
+          "query_id": "Q-21",
+          "query_text": "How many total semester credit hours are required to earn a Bachelor of Science degree in Cybersecurity?",
+          "question_type": "unanswerable_abstention",
+          "is_answerable_ground_truth": false,
+          "relevant_doc_ids": [],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-002_chk_00",
+            "DOC-ACAD-002_chk_01",
+            "DOC-ACAD-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-002",
+            "DOC-ACAD-002",
+            "DOC-ACAD-001"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "EV charging is complimentary for the initial 4 hours for vehicles holding\n\n\nthe total possible marks for each 24-hour period (or fraction thereof) beyond the deadline.",
+          "latency_ms": 1.06
+        },
+        {
+          "query_id": "Q-22",
+          "query_text": "What are the recreational swimming pool lane hours and lap reservation rules at the campus aquatic center?",
+          "question_type": "unanswerable_abstention",
+          "is_answerable_ground_truth": false,
+          "relevant_doc_ids": [],
+          "retrieved_chunk_ids": [
+            "DOC-IT-001_chk_00",
+            "DOC-IT-003_chk_00",
+            "DOC-FAC-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-001",
+            "DOC-IT-003",
+            "DOC-FAC-001"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": true,
+          "groundedness_score": 1.0,
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 1.04
+        }
+      ]
+    },
+    "dense_cosine": {
+      "config_name": "dense_cosine",
+      "top_k": 3,
+      "total_queries": 22,
+      "answerable_queries": 19,
+      "unanswerable_queries": 3,
+      "mean_precision_at_k_answerable": 0.2105,
+      "mean_recall_at_k_answerable": 0.5789,
+      "mrr_answerable": 0.4561,
+      "mean_precision_at_k_all": 0.1818,
+      "mean_recall_at_k_all": 0.5,
+      "mrr_all": 0.3939,
+      "mean_groundedness": 1.0,
+      "mean_latency_ms": 0.5,
+      "abstention_metrics": {
+        "tp": 2,
+        "fp": 4,
+        "fn": 1,
+        "tn": 15,
+        "precision": 0.3333,
+        "recall": 0.6667,
+        "f1": 0.4444,
+        "accuracy": 0.7727
+      },
+      "per_query_results": [
+        {
+          "query_id": "Q-01",
+          "query_text": "What is the primary WPA3 wireless network SSID for students, and what is the maximum number of concurrent registered devices allowed per student?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-003_chk_00",
+            "DOC-ACAD-002_chk_00",
+            "DOC-IT-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-003",
+            "DOC-ACAD-002",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.3333,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Each registered student may enroll a maximum of 4 concurrent devices through the hardware registration portal at netreg.university.edu. No assignment will be accepted more\n\n\n5 Mbps per device.",
+          "latency_ms": 5.17
+        },
+        {
+          "query_id": "Q-02",
+          "query_text": "What authorization form is required to gain access to the Titan-HPC GPU computing cluster, and where is the cluster located?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-003"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-003_chk_00",
+            "DOC-FAC-001_chk_01",
+            "DOC-IT-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-003",
+            "DOC-FAC-001",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "The Division of Advanced Research Computing operates the 'Titan-HPC' computing cluster, housed in the Turing Hall Data Center (Room DH-104). Student researchers must submit authorization form HPC-REQ-2026\n\n\n3D printing utilizing standard PLA and PETG filament is subsidized at $0.05 per gram; custom resins or high-temperature polymers require prior approval from the Lab Supervisor.",
+          "latency_ms": 0.33
+        },
+        {
+          "query_id": "Q-03",
+          "query_text": "Under policy code POLICY-AI-2026, what penalties are applied to a student for a first academic misconduct violation regarding generative artificial intelligence?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-003"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-003_chk_00",
+            "DOC-ACAD-002_chk_01",
+            "DOC-ACAD-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-003",
+            "DOC-ACAD-002",
+            "DOC-ACAD-001"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "The university's academic honesty policy is governed by code 'POLICY-AI-2026'. Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus.",
+          "latency_ms": 0.35
+        },
+        {
+          "query_id": "Q-04",
+          "query_text": "What form must be submitted for a Stage 2 formal final grade appeal, and to whom is it submitted?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-004"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-004_chk_01",
+            "DOC-IT-002_chk_01",
+            "DOC-IT-003_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-004",
+            "DOC-IT-002",
+            "DOC-IT-003"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "exceeding 35 MB must be shared via university OneDrive or Google Drive download links. Student researchers must submit authorization form HPC-REQ-2026 co-signed by their faculty advisor to obtain access keys.",
+          "latency_ms": 0.23
+        },
+        {
+          "query_id": "Q-05",
+          "query_text": "Where is the student MakerSpace located on campus, and which training module is required for initial badge access?",
+          "question_type": "keyword_identifier",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-001_chk_00",
+            "DOC-ACAD-003_chk_00",
+            "DOC-IT-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-001",
+            "DOC-ACAD-003",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Access is restricted to students who have completed the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person equipment walkthrough. The student MakerSpace is situated in the Lovelace Engineering Center, Room LC-205.",
+          "latency_ms": 0.29
+        },
+        {
+          "query_id": "Q-06",
+          "query_text": "How much pooled cloud storage is allocated to undergraduate students, and what is the allocation for postgraduate researchers?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-002_chk_00",
+            "DOC-ACAD-002_chk_01",
+            "DOC-IT-003_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-002",
+            "DOC-ACAD-002",
+            "DOC-IT-003"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Student researchers must submit authorization form HPC-REQ-2026",
+          "latency_ms": 0.28
+        },
+        {
+          "query_id": "Q-07",
+          "query_text": "What is the daily penalty percentage for submitting an assignment late, and what is the maximum late submission cutoff after which work receives zero?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-002_chk_01",
+            "DOC-ACAD-002_chk_00",
+            "DOC-FAC-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-002",
+            "DOC-ACAD-002",
+            "DOC-FAC-001"
+          ],
+          "precision_at_k": 0.6667,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "No assignment will be accepted more than 72 hours (3 calendar days) after the original submission deadline; work submitted past 72 hours automatically receives a mark of zero. Submissions completed after this 15-minute window are assessed a late penalty of 10% of the total possible marks for each 24-hour period (or fraction thereof) beyond the deadline.",
+          "latency_ms": 0.31
+        },
+        {
+          "query_id": "Q-08",
+          "query_text": "After how many consecutive days of zero login activity is a student email account flagged for deactivation, and what is the maximum email attachment size limit?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-002_chk_01",
+            "DOC-IT-001_chk_00",
+            "DOC-ACAD-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-002",
+            "DOC-IT-001",
+            "DOC-ACAD-001"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Student email accounts that remain inactive with zero logins for 180 consecutive days are automatically flagged for deactivation. After a 30-day grace notification sent to the student's secondary emergency contact, unaccessed accounts are permanently deleted.",
+          "latency_ms": 0.3
+        },
+        {
+          "query_id": "Q-09",
+          "query_text": "What is the minimum character length required for passwords, and how often must passwords be changed according to the information security policy?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-004"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-002_chk_01",
+            "DOC-IT-001_chk_00",
+            "DOC-LIB-001_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-002",
+            "DOC-IT-001",
+            "DOC-LIB-001"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Requests for medical extensions must include a verified clinic note and be submitted through the student portal within 48 hours of the deadline. Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication.",
+          "latency_ms": 0.29
+        },
+        {
+          "query_id": "Q-10",
+          "query_text": "What is the daily overdue fine for borrowed technology laptops from the library, and what is the maximum replacement fee?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-LIB-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-003_chk_00",
+            "DOC-LIB-001_chk_01",
+            "DOC-ACAD-002_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-003",
+            "DOC-LIB-001",
+            "DOC-ACAD-002"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Overdue technology checkouts incur an overdue penalty fee of $15.00 per day, capped at a maximum equipment replacement fee of $1,200.",
+          "latency_ms": 0.26
+        },
+        {
+          "query_id": "Q-11",
+          "query_text": "How many hours of electric vehicle charging are provided free of charge with a valid semester permit, and what is the hourly rate thereafter?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-004_chk_01",
+            "DOC-ACAD-001_chk_00",
+            "DOC-ACAD-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-004",
+            "DOC-ACAD-001",
+            "DOC-ACAD-001"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Legitimate grounds for appeal are restricted to mathematical calculation errors, deviations from published grading rubrics, or proven bias; disagreement with pedagogical grading standards does not constitute valid grounds.",
+          "latency_ms": 0.28
+        },
+        {
+          "query_id": "Q-12",
+          "query_text": "Within how many calendar days must a student pay or contest a parking violation citation to avoid a late fee, and how much is the late administrative charge?",
+          "question_type": "numerical_policy",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-002_chk_01",
+            "DOC-ACAD-002_chk_01",
+            "DOC-ACAD-004_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-002",
+            "DOC-ACAD-002",
+            "DOC-ACAD-004"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Parking violation citations must be paid or formally contested online at parking.university.edu/appeal within 14 calendar days of citation issuance; citations not addressed within 14 days incur a $25 late administrative charge. Requests for medical extensions must include a verified clinic note and be submitted through the student portal within 48 hours of the deadline.",
+          "latency_ms": 0.3
+        },
+        {
+          "query_id": "Q-13",
+          "query_text": "Until what point in the academic term can an undergraduate drop a class to get a full 100% refund on tuition?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-002_chk_00",
+            "DOC-ACAD-003_chk_00",
+            "DOC-IT-003_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-002",
+            "DOC-ACAD-003",
+            "DOC-IT-003"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": true,
+          "groundedness_score": 1.0,
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.26
+        },
+        {
+          "query_id": "Q-14",
+          "query_text": "Is there any automatic tolerance buffer provided when uploading assignments on Canvas in case of an unexpected internet glitch?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-002"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-001_chk_01",
+            "DOC-FAC-002_chk_01",
+            "DOC-ACAD-002_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-001",
+            "DOC-FAC-002",
+            "DOC-ACAD-002"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.3333,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "All academic assignments, problem sets, and laboratory write-ups must be submitted through the university Canvas LMS portal by the time designated on the course syllabus.",
+          "latency_ms": 0.26
+        },
+        {
+          "query_id": "Q-15",
+          "query_text": "Can university community members still use SMS text messages to verify their identity for multi-factor login?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-004"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-003_chk_01",
+            "DOC-IT-004_chk_01",
+            "DOC-IT-002_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-003",
+            "DOC-IT-004",
+            "DOC-IT-002"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.5,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "SMS text message verification was deprecated in August 2025 due to SIM-swapping vulnerabilities.",
+          "latency_ms": 0.22
+        },
+        {
+          "query_id": "Q-16",
+          "query_text": "Am I allowed to install my own personal wireless router or Wi-Fi range extender in my dorm room?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-IT-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-IT-002_chk_01",
+            "DOC-IT-004_chk_01",
+            "DOC-IT-004_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-002",
+            "DOC-IT-004",
+            "DOC-IT-004"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": true,
+          "groundedness_score": 1.0,
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.22
+        },
+        {
+          "query_id": "Q-17",
+          "query_text": "What disciplinary sanction happens if a student commits a second infraction involving unauthorized artificial intelligence tool usage?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-ACAD-003"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-004_chk_00",
+            "DOC-IT-003_chk_01",
+            "DOC-ACAD-004_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-004",
+            "DOC-IT-003",
+            "DOC-ACAD-004"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": true,
+          "groundedness_score": 1.0,
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.27
+        },
+        {
+          "query_id": "Q-18",
+          "query_text": "How many books can an undergraduate check out from Babbage Library at a time, and what is the standard borrowing duration?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-LIB-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-002_chk_01",
+            "DOC-FAC-002_chk_01",
+            "DOC-ACAD-002_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-002",
+            "DOC-FAC-002",
+            "DOC-ACAD-002"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": true,
+          "groundedness_score": 1.0,
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.26
+        },
+        {
+          "query_id": "Q-19",
+          "query_text": "What specialized qualification and supervision requirements apply to operating the CNC milling machine or high-powered laser cutter in the engineering workshop?",
+          "question_type": "semantic_paraphrase",
+          "is_answerable_ground_truth": true,
+          "relevant_doc_ids": [
+            "DOC-FAC-001"
+          ],
+          "retrieved_chunk_ids": [
+            "DOC-FAC-001_chk_01",
+            "DOC-ACAD-002_chk_01",
+            "DOC-IT-003_chk_00"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-FAC-001",
+            "DOC-ACAD-002",
+            "DOC-IT-003"
+          ],
+          "precision_at_k": 0.3333,
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "Advanced fabrication machinery, specifically the CNC mill and 100W CO2 laser cutter, requires specialized Red Badge certification and requires a minimum 2-person buddy system to be active in the room at all times during operation.",
+          "latency_ms": 0.29
+        },
+        {
+          "query_id": "Q-20",
+          "query_text": "What is the per-diem meal reimbursement rate for graduate students presenting research papers at academic conferences?",
+          "question_type": "unanswerable_abstention",
+          "is_answerable_ground_truth": false,
+          "relevant_doc_ids": [],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-002_chk_00",
+            "DOC-ACAD-004_chk_01",
+            "DOC-FAC-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-002",
+            "DOC-ACAD-004",
+            "DOC-FAC-001"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": false,
+          "groundedness_score": 1.0,
+          "answer_text": "If the student demonstrates procedural error or demonstrable grading bias, Stage 3 allows an escalation to the Dean's Academic Review Board within 7 business days of the Department Chair's ruling.",
+          "latency_ms": 0.27
+        },
+        {
+          "query_id": "Q-21",
+          "query_text": "How many total semester credit hours are required to earn a Bachelor of Science degree in Cybersecurity?",
+          "question_type": "unanswerable_abstention",
+          "is_answerable_ground_truth": false,
+          "relevant_doc_ids": [],
+          "retrieved_chunk_ids": [
+            "DOC-ACAD-003_chk_01",
+            "DOC-ACAD-001_chk_01",
+            "DOC-IT-001_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-ACAD-003",
+            "DOC-ACAD-001",
+            "DOC-IT-001"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": true,
+          "groundedness_score": 1.0,
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.22
+        },
+        {
+          "query_id": "Q-22",
+          "query_text": "What are the recreational swimming pool lane hours and lap reservation rules at the campus aquatic center?",
+          "question_type": "unanswerable_abstention",
+          "is_answerable_ground_truth": false,
+          "relevant_doc_ids": [],
+          "retrieved_chunk_ids": [
+            "DOC-IT-003_chk_00",
+            "DOC-FAC-001_chk_01",
+            "DOC-ACAD-004_chk_01"
+          ],
+          "retrieved_doc_ids": [
+            "DOC-IT-003",
+            "DOC-FAC-001",
+            "DOC-ACAD-004"
+          ],
+          "precision_at_k": 0.0,
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "is_abstention": true,
+          "groundedness_score": 1.0,
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.24
+        }
+      ]
+    }
+  }
+}
