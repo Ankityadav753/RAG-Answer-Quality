@@ -199,6 +199,68 @@ class TestAnswerGenerator(unittest.TestCase):
         self.assertEqual(d["source_doc_ids"], ["doc_01"])
         self.assertEqual(d["provider"], "test-provider")
 
+    def test_prevent_duplicate_and_overlapping_sentences(self) -> None:
+        """Verify generator avoids repeating identical or overlapping extracted sentences."""
+        chunk1 = RetrievalResult(
+            chunk_id="chk_01",
+            document_id="doc_01",
+            content="Undergraduate students may borrow up to 10 books at a time. The loan period is 28 days.",
+            score=0.9,
+            rank=1,
+        )
+        # chunk2 overlaps with chunk1 and repeats the sentence
+        chunk2 = RetrievalResult(
+            chunk_id="chk_02",
+            document_id="doc_01",
+            content="Undergraduate students may borrow up to 10 books at a time. Renewals are permitted twice.",
+            score=0.88,
+            rank=2,
+        )
+
+        res = self.generator.generate(
+            query="How many books may undergraduate students borrow?",
+            retrieved_chunks=[chunk1, chunk2],
+        )
+
+        self.assertFalse(res.is_abstention)
+        # Count occurrences of the key clause
+        count = res.answer.count("borrow up to 10 books at a time")
+        self.assertEqual(count, 1, f"Sentence was duplicated in answer: {res.answer}")
+
+    def test_sentence_overlap_detection(self) -> None:
+        """Verify are_sentences_overlapping detects identical, substring, and heavy token overlaps."""
+        from src.generator import are_sentences_overlapping
+
+        s1 = "Undergraduate students may borrow up to 10 books at a time."
+        s2 = "undergraduate students may borrow up to 10 books at a time"
+        s3 = "Students may borrow up to 10 books at a time through the library."
+        s4 = "Parking permits cost $280 per semester for motor vehicles."
+
+        self.assertTrue(are_sentences_overlapping(s1, s2))
+        self.assertTrue(are_sentences_overlapping(s1, s3))
+        self.assertFalse(are_sentences_overlapping(s1, s4))
+
+    def test_get_llm_provider_factory(self) -> None:
+        """Verify get_llm_provider returns appropriate providers for configurations."""
+        from src.generator import get_llm_provider
+
+        # Default offline
+        p_mock = get_llm_provider()
+        self.assertIsInstance(p_mock, DeterministicMockLLMProvider)
+
+        # Force mock
+        p_forced = get_llm_provider(use_mock=True)
+        self.assertIsInstance(p_forced, DeterministicMockLLMProvider)
+
+        # OpenAI compatible
+        p_openai = get_llm_provider(provider="openai", api_key="sk-test-key", model="gpt-4o")
+        self.assertIsInstance(p_openai, OpenAICompatibleProvider)
+        self.assertEqual(p_openai.provider_name, "openai-compatible:gpt-4o")
+
+        # Unknown provider raises ValueError
+        with self.assertRaises(ValueError):
+            get_llm_provider(provider="nonexistent_provider")
+
 
 if __name__ == "__main__":
     unittest.main()

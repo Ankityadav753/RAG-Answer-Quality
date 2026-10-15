@@ -267,7 +267,16 @@ class DenseRetriever(BaseRetriever):
         self._embeddings_matrix: Optional[np.ndarray] = None
         self._is_indexed = False
 
+    def invalidate_index(self) -> None:
+        """Reset in-memory index cache so next retrieval re-indexes from SQLite."""
+        self._is_indexed = False
+        self._embeddings_matrix = None
+        self._chunk_ids = []
+        self._document_ids = []
+        self._contents = []
+
     def index_chunks(self, force_recompute: bool = False) -> int:
+
         """
         Load or compute embeddings for all document chunks in SQLite.
         Persists newly generated embeddings back to `document_chunks.embedding_json`.
@@ -307,15 +316,37 @@ class DenseRetriever(BaseRetriever):
             doc_ids.append(did)
             contents.append(text)
 
+            is_valid_cache = False
             if not force_recompute and emb_json:
                 try:
-                    vec = np.array(json.loads(emb_json), dtype=np.float32)
-                    vectors.append(vec)
+                    payload = json.loads(emb_json)
+                    if isinstance(payload, dict) and "vector" in payload:
+                        cached_model = payload.get("model")
+                        cached_dim = payload.get("dim")
+                        raw_vec = payload.get("vector")
+                        if (
+                            cached_model == self.embedding_model.model_name
+                            and cached_dim == self.embedding_model.dimension
+                            and isinstance(raw_vec, list)
+                            and len(raw_vec) == self.embedding_model.dimension
+                        ):
+                            vec = np.array(raw_vec, dtype=np.float32)
+                            vectors.append(vec)
+                            is_valid_cache = True
+                    elif isinstance(payload, list):
+                        # Legacy unversioned raw vector list: only accept if dimension strictly matches
+                        # AND model is the legacy test double
+                        if (
+                            len(payload) == self.embedding_model.dimension
+                            and self.embedding_model.model_name == "deterministic-test-double-v1"
+                        ):
+                            vec = np.array(payload, dtype=np.float32)
+                            vectors.append(vec)
+                            is_valid_cache = True
                 except Exception:
-                    missing_indices.append(idx)
-                    missing_texts.append(text)
-                    vectors.append(np.zeros(self.embedding_model.dimension, dtype=np.float32))
-            else:
+                    is_valid_cache = False
+
+            if not is_valid_cache:
                 missing_indices.append(idx)
                 missing_texts.append(text)
                 vectors.append(np.zeros(self.embedding_model.dimension, dtype=np.float32))
@@ -323,16 +354,29 @@ class DenseRetriever(BaseRetriever):
         # Compute embeddings for missing chunks in a single batched call
         if missing_texts:
             new_vectors = self.embedding_model.encode(missing_texts)
-            # Update SQLite with computed embeddings
+            # Update SQLite with computed embeddings and model metadata
             with get_db_connection(self.db_path) as conn:
                 cursor = conn.cursor()
                 for pos, (orig_idx, vec) in enumerate(zip(missing_indices, new_vectors)):
                     vectors[orig_idx] = vec
                     cid = chunk_ids[orig_idx]
+                    cache_payload = {
+                        "model": self.embedding_model.model_name,
+                        "dim": self.embedding_model.dimension,
+                        "vector": vec.tolist(),
+                    }
                     cursor.execute(
                         "UPDATE document_chunks SET embedding_json = ? WHERE id = ?;",
-                        (json.dumps(vec.tolist()), cid),
+                        (json.dumps(cache_payload), cid),
                     )
+
+        # Validate that all vectors match expected dimension before matrix creation
+        for i, vec in enumerate(vectors):
+            if vec.shape != (self.embedding_model.dimension,):
+                raise RuntimeError(
+                    f"Embedding dimension mismatch at chunk {chunk_ids[i]}: "
+                    f"expected {self.embedding_model.dimension}, got {vec.shape}"
+                )
 
         self._chunk_ids = chunk_ids
         self._document_ids = doc_ids
@@ -353,7 +397,12 @@ class DenseRetriever(BaseRetriever):
         if not query or not query.strip():
             return []
 
-        if not self._is_indexed:
+        # If model dimension changed or not indexed, re-index
+        if (
+            not self._is_indexed
+            or self._embeddings_matrix is None
+            or self._embeddings_matrix.shape[1] != self.embedding_model.dimension
+        ):
             self.index_chunks()
 
         if self._embeddings_matrix is None or len(self._chunk_ids) == 0:

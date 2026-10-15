@@ -235,6 +235,24 @@ def save_benchmark_to_sqlite(
     return run_id
 
 
+def determine_winner(
+    lex_val: float,
+    dense_val: float,
+    higher_is_better: bool = True,
+    tolerance: float = 1e-4,
+) -> str:
+    """
+    Determine the winning configuration between Lexical and Dense,
+    properly reporting 'Tie' when metric scores are equal within tolerance.
+    """
+    if abs(lex_val - dense_val) <= tolerance:
+        return "Tie"
+    if higher_is_better:
+        return "Lexical" if lex_val > dense_val else "Dense"
+    else:
+        return "Lexical" if lex_val < dense_val else "Dense"
+
+
 def generate_markdown_report(
     lex_summary: BenchmarkSummary,
     dense_summary: BenchmarkSummary,
@@ -256,16 +274,16 @@ def generate_markdown_report(
 
 | Metric Category | Metric | Configuration A: Lexical (SQLite FTS5 BM25) | Configuration B: Dense Vector (Cosine Similarity) | Performance Winner |
 | :--- | :--- | :---: | :---: | :---: |
-| **Retrieval Quality** (Answerable N=19) | **MRR (Mean Reciprocal Rank)** | **{lex_summary.mrr_answerable:.4f}** | **{dense_summary.mrr_answerable:.4f}** | {'Lexical' if lex_summary.mrr_answerable >= dense_summary.mrr_answerable else 'Dense'} |
-| | **Recall@{lex_summary.top_k}** | **{lex_summary.mean_recall_at_k_answerable:.4f}** | **{dense_summary.mean_recall_at_k_answerable:.4f}** | {'Lexical' if lex_summary.mean_recall_at_k_answerable >= dense_summary.mean_recall_at_k_answerable else 'Dense'} |
-| | **Precision@{lex_summary.top_k}** | **{lex_summary.mean_precision_at_k_answerable:.4f}** | **{dense_summary.mean_precision_at_k_answerable:.4f}** | {'Lexical' if lex_summary.mean_precision_at_k_answerable >= dense_summary.mean_precision_at_k_answerable else 'Dense'} |
-| **Retrieval Quality** (All Queries N=22) | **MRR (Overall)** | **{lex_summary.mrr_all:.4f}** | **{dense_summary.mrr_all:.4f}** | {'Lexical' if lex_summary.mrr_all >= dense_summary.mrr_all else 'Dense'} |
-| | **Precision@{lex_summary.top_k} (Overall)** | **{lex_summary.mean_precision_at_k_all:.4f}** | **{dense_summary.mean_precision_at_k_all:.4f}** | {'Lexical' if lex_summary.mean_precision_at_k_all >= dense_summary.mean_precision_at_k_all else 'Dense'} |
-| **Answer Quality** | **Groundedness Score** (Heuristic) | **{lex_summary.mean_groundedness:.4f}** | **{dense_summary.mean_groundedness:.4f}** | {'Lexical' if lex_summary.mean_groundedness >= dense_summary.mean_groundedness else 'Dense'} |
-| **Abstention Guardrails** | **Abstention Precision** | **{lex_ab['precision']:.4f}** | **{dense_ab['precision']:.4f}** | {'Tie' if lex_ab['precision'] == dense_ab['precision'] else ('Lexical' if lex_ab['precision'] > dense_ab['precision'] else 'Dense')} |
-| | **Abstention Recall** | **{lex_ab['recall']:.4f}** | **{dense_ab['recall']:.4f}** | {'Tie' if lex_ab['recall'] == dense_ab['recall'] else ('Lexical' if lex_ab['recall'] > dense_ab['recall'] else 'Dense')} |
-| | **Abstention F1 Score** | **{lex_ab['f1']:.4f}** | **{dense_ab['f1']:.4f}** | {'Tie' if lex_ab['f1'] == dense_ab['f1'] else ('Lexical' if lex_ab['f1'] > dense_ab['f1'] else 'Dense')} |
-| **Performance** | **Mean Latency per Query** | **{lex_summary.mean_latency_ms:.2f} ms** | **{dense_summary.mean_latency_ms:.2f} ms** | {'Lexical' if lex_summary.mean_latency_ms <= dense_summary.mean_latency_ms else 'Dense'} |
+| **Retrieval Quality** (Answerable N=19) | **MRR (Mean Reciprocal Rank)** | **{lex_summary.mrr_answerable:.4f}** | **{dense_summary.mrr_answerable:.4f}** | {determine_winner(lex_summary.mrr_answerable, dense_summary.mrr_answerable)} |
+| | **Recall@{lex_summary.top_k}** | **{lex_summary.mean_recall_at_k_answerable:.4f}** | **{dense_summary.mean_recall_at_k_answerable:.4f}** | {determine_winner(lex_summary.mean_recall_at_k_answerable, dense_summary.mean_recall_at_k_answerable)} |
+| | **Precision@{lex_summary.top_k}** | **{lex_summary.mean_precision_at_k_answerable:.4f}** | **{dense_summary.mean_precision_at_k_answerable:.4f}** | {determine_winner(lex_summary.mean_precision_at_k_answerable, dense_summary.mean_precision_at_k_answerable)} |
+| **Retrieval Quality** (All Queries N=22) | **MRR (Overall)** | **{lex_summary.mrr_all:.4f}** | **{dense_summary.mrr_all:.4f}** | {determine_winner(lex_summary.mrr_all, dense_summary.mrr_all)} |
+| | **Precision@{lex_summary.top_k} (Overall)** | **{lex_summary.mean_precision_at_k_all:.4f}** | **{dense_summary.mean_precision_at_k_all:.4f}** | {determine_winner(lex_summary.mean_precision_at_k_all, dense_summary.mean_precision_at_k_all)} |
+| **Answer Quality** | **Groundedness Score** (Heuristic) | **{lex_summary.mean_groundedness:.4f}** | **{dense_summary.mean_groundedness:.4f}** | {determine_winner(lex_summary.mean_groundedness, dense_summary.mean_groundedness)} |
+| **Abstention Guardrails** | **Abstention Precision** | **{lex_ab['precision']:.4f}** | **{dense_ab['precision']:.4f}** | {determine_winner(lex_ab['precision'], dense_ab['precision'])} |
+| | **Abstention Recall** | **{lex_ab['recall']:.4f}** | **{dense_ab['recall']:.4f}** | {determine_winner(lex_ab['recall'], dense_ab['recall'])} |
+| | **Abstention F1 Score** | **{lex_ab['f1']:.4f}** | **{dense_ab['f1']:.4f}** | {determine_winner(lex_ab['f1'], dense_ab['f1'])} |
+| **Performance** | **Mean Latency per Query** | **{lex_summary.mean_latency_ms:.2f} ms** | **{dense_summary.mean_latency_ms:.2f} ms** | {determine_winner(lex_summary.mean_latency_ms, dense_summary.mean_latency_ms, higher_is_better=False, tolerance=0.05)} |
 
 ---
 

@@ -119,6 +119,38 @@ class BaseLLMProvider(ABC):
         pass
 
 
+def _normalize_sentence_text(text: str) -> str:
+    """Normalize internal spacing and clean trailing/leading noise."""
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def are_sentences_overlapping(s1: str, s2: str, overlap_token_thresh: float = 0.65) -> bool:
+    """
+    Determine if two sentences duplicate or significantly overlap in semantic content.
+    Prevents including repeated or fragment-redundant sentences from overlapping chunks.
+    """
+    c1 = _normalize_sentence_text(s1).lower()
+    c2 = _normalize_sentence_text(s2).lower()
+    if not c1 or not c2:
+        return False
+    if c1 == c2:
+        return True
+    if c1 in c2 or c2 in c1:
+        return True
+
+    toks1 = set(re.findall(r"\b[A-Za-z0-9_-]+\b", c1))
+    toks2 = set(re.findall(r"\b[A-Za-z0-9_-]+\b", c2))
+    if not toks1 or not toks2:
+        return False
+
+    intersection = toks1.intersection(toks2)
+    min_len = min(len(toks1), len(toks2))
+    if min_len > 0 and (len(intersection) / min_len) >= overlap_token_thresh:
+        return True
+
+    return False
+
+
 class DeterministicMockLLMProvider(BaseLLMProvider):
     """
     Deterministic offline test-double provider.
@@ -163,10 +195,15 @@ class DeterministicMockLLMProvider(BaseLLMProvider):
             if t not in stopwords and len(t) >= 2
         }
 
-        # Break context into sentences
-        # Remove headers like [Context 1 | Document: ...]
+        # Break context into sentences and blocks cleanly
+        # Split on sentence ending punctuation followed by space OR on newlines/paragraph breaks
         clean_context = re.sub(r"\[Context \d+ \| Document:.*?\]", "", context)
-        sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", clean_context) if s.strip()]
+        raw_blocks = re.split(r"(?:(?<=[.!?])\s+|\n+)", clean_context)
+        sentences: List[str] = []
+        for b in raw_blocks:
+            norm_b = _normalize_sentence_text(b)
+            if norm_b:
+                sentences.append(norm_b)
 
         # Determine minimum required token overlap threshold
         # For short queries (<=2 content words), require at least 1 match.
@@ -189,13 +226,11 @@ class DeterministicMockLLMProvider(BaseLLMProvider):
         if not scored_sentences:
             return ABSTENTION_MESSAGE
 
-        # Sort by overlap descending and take top matching unique sentences
-        scored_sentences.sort(key=lambda x: x[0], reverse=True)
+        # Sort by overlap descending, preferring longer/more complete sentences on ties
+        scored_sentences.sort(key=lambda x: (x[0], len(x[1])), reverse=True)
         top_sentences: List[str] = []
-        seen_s: set[str] = set()
         for _, s in scored_sentences:
-            if s not in seen_s:
-                seen_s.add(s)
+            if not any(are_sentences_overlapping(s, existing) for existing in top_sentences):
                 top_sentences.append(s)
             if len(top_sentences) == 2:
                 break
@@ -217,10 +252,12 @@ class OpenAICompatibleProvider(BaseLLMProvider):
         model: str = "gpt-4o-mini",
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
+        timeout: float = 30.0,
     ) -> None:
         self._model = model
         self._api_key = api_key or os.environ.get("OPENAI_API_KEY")
         self._base_url = base_url or os.environ.get("OPENAI_BASE_URL")
+        self._timeout = timeout
 
     @property
     def provider_name(self) -> str:
@@ -254,12 +291,56 @@ class OpenAICompatibleProvider(BaseLLMProvider):
                 method="POST",
             )
 
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=self._timeout) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 return str(data["choices"][0]["message"]["content"]).strip()
 
         except Exception as e:
             raise LLMProviderError(f"Provider request failed: {e}") from e
+
+
+def get_llm_provider(
+    provider: Optional[str] = None,
+    model: Optional[str] = None,
+    api_key: Optional[str] = None,
+    base_url: Optional[str] = None,
+    use_mock: bool = False,
+) -> BaseLLMProvider:
+    """
+    Factory helper to instantiate an LLM provider based on name or environment configuration.
+    
+    Args:
+        provider: Provider identifier ('mock', 'openai', 'gemini', 'openai-compatible').
+        model: Model name override (e.g. 'gpt-4o-mini', 'gemini-2.0-flash').
+        api_key: Optional explicit API key.
+        base_url: Optional explicit base URL.
+        use_mock: If True, forces use of DeterministicMockLLMProvider.
+        
+    Returns:
+        BaseLLMProvider: Configured LLM provider instance.
+    """
+    if use_mock:
+        return DeterministicMockLLMProvider()
+
+    prov = (provider or os.environ.get("RAG_LLM_PROVIDER") or "").strip().lower()
+    mode = os.environ.get("RAG_MODE", "offline").strip().lower()
+
+    if not prov or prov in ("mock", "deterministic", "test_double") or (mode == "offline" and not provider):
+        return DeterministicMockLLMProvider()
+
+    if prov in ("openai", "openai-compatible"):
+        target_model = model or os.environ.get("OPENAI_MODEL") or "gpt-4o-mini"
+        target_key = api_key or os.environ.get("OPENAI_API_KEY")
+        target_url = base_url or os.environ.get("OPENAI_BASE_URL")
+        return OpenAICompatibleProvider(model=target_model, api_key=target_key, base_url=target_url)
+
+    if prov == "gemini":
+        target_model = model or os.environ.get("GEMINI_MODEL") or "gemini-2.0-flash"
+        target_key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+        target_url = base_url or os.environ.get("GEMINI_BASE_URL") or "https://generativelanguage.googleapis.com/v1beta/openai"
+        return OpenAICompatibleProvider(model=target_model, api_key=target_key, base_url=target_url)
+
+    raise ValueError(f"Unknown LLM provider: '{prov}'. Supported: 'mock', 'openai', 'gemini', 'openai-compatible'.")
 
 
 # =============================================================================

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DAI-009 RAG Answer Quality Benchmark, Question Answering, and Dynamic Document Management">
+  <title>DAI-009: RAG Answer Quality & Document Management</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-container">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-title">DAI-009: RAG Answer Quality</h1>
+            <p class="brand-subtitle">Context-Grounded Question Answering & Knowledge Base Management</p>
+          </div>
+        </div>
+
+        <div class="header-badges">
+          <div id="system-status-badge" class="badge badge-success">
+            <span class="status-dot"></span>
+            <span id="system-status-text">System Ready</span>
+          </div>
+          <div id="mode-badge" class="badge badge-neutral">
+            <span id="mode-text">Offline Deterministic</span>
+          </div>
+          <div id="docs-badge" class="badge badge-outline">
+            <span id="docs-count-text">11 Documents</span>
+          </div>
+          <div id="chunks-badge" class="badge badge-outline">
+            <span id="chunks-count-text">43 Chunks</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs-wrapper">
+          <nav class="nav-tabs" role="tablist">
+            <button type="button" class="tab-btn active" id="tab-query-btn" role="tab" aria-selected="true" data-tab="panel-query">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+              <span>Ask & Query</span>
+            </button>
+            <button type="button" class="tab-btn" id="tab-docs-btn" role="tab" aria-selected="false" data-tab="panel-docs">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <span>Document Knowledge Base</span>
+              <span id="tab-docs-badge" class="tab-badge">11</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- TAB PANEL 1: QUERY & ANSWER INTERFACE                         -->
+        <!-- ============================================================= -->
+        <div id="panel-query" class="tab-panel active" role="tabpanel" aria-labelledby="tab-query-btn">
+          
+          <!-- Query Form Section -->
+          <section class="card query-card">
+            <div class="card-header">
+              <h2>Ask a Policy Question</h2>
+              <p class="card-description">Questions are answered strictly using retrieved knowledge base document chunks with automated abstention guardrails.</p>
+            </div>
+
+            <!-- Sample Queries Quick Chips -->
+            <div class="sample-queries-wrapper">
+              <span class="sample-queries-label">Sample Questions:</span>
+              <div id="sample-queries" class="sample-chips">
+                <button type="button" class="chip" data-query="What is the primary WPA3 wireless network SSID for students, and what is the maximum number of concurrent registered devices allowed per student?">
+                  Wi-Fi SSID & Device Limits
+                </button>
+                <button type="button" class="chip" data-query="What authorization form is required to gain access to the Titan-HPC GPU computing cluster, and where is the cluster located?">
+                  Titan-HPC GPU Access Keys
+                </button>
+                <button type="button" class="chip" data-query="Under policy code POLICY-AI-2026, what penalties are applied to a student for a first academic misconduct violation regarding generative artificial intelligence?">
+                  Generative AI Policy (POLICY-AI-2026)
+                </button>
+                <button type="button" class="chip" data-query="How many books can an undergraduate check out from Babbage Library at a time, and what is the standard borrowing duration?">
+                  Library Borrowing Limits
+                </button>
+                <button type="button" class="chip chip-warning" data-query="What are the recreational swimming pool lane hours and lap reservation rules at the campus aquatic center?">
+                  Olympic Pool Hours [Unanswerable]
+                </button>
+              </div>
+            </div>
+
+            <form id="rag-query-form" class="query-form">
+              <div class="form-group">
+                <label for="question-input" class="form-label">Your Question</label>
+                <textarea 
+                  id="question-input" 
+                  class="form-textarea" 
+                  rows="3" 
+                  placeholder="Enter a question about university IT, research cluster, library, academic integrity, or newly uploaded documents..."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-controls-row">
+                <div class="control-group">
+                  <label for="retriever-select" class="control-label">Retrieval Algorithm</label>
+                  <select id="retriever-select" class="form-select">
+                    <option value="lexical" selected>Configuration A: Lexical (SQLite FTS5 BM25)</option>
+                    <option value="dense">Configuration B: Dense Vector (Cosine Similarity)</option>
+                  </select>
+                </div>
+
+                <div class="control-group control-group-sm">
+                  <label for="top-k-select" class="control-label">Top-K Chunks</label>
+                  <select id="top-k-select" class="form-select">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3" selected>3 (Standard)</option>
+                    <option value="5">5</option>
+                  </select>
+                </div>
+
+                <div class="form-actions">
+                  <button type="button" id="clear-button" class="btn btn-secondary">Clear</button>
+                  <button type="submit" id="ask-button" class="btn btn-primary">
+                    <span class="btn-text">Ask Question</span>
+                    <span class="btn-spinner hidden" id="btn-spinner"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </section>
+
+          <!-- Error Banner -->
+          <div id="error-container" class="alert alert-error hidden" role="alert">
+            <div class="alert-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <div class="alert-content">
+              <span class="alert-title">Query Processing Error</span>
+              <p id="error-message" class="alert-description"></p>
+            </div>
+            <button type="button" id="error-dismiss" class="alert-close" aria-label="Close error">&times;</button>
+          </div>
+
+          <!-- Loading State -->
+          <div id="loading-state" class="card loading-card hidden">
+            <div class="loading-spinner-wrapper">
+              <div class="spinner" id="loading-spinner"></div>
+            </div>
+            <div class="loading-text">
+              <h3>Retrieving & Generating Answer</h3>
+              <p>Scanning knowledge base, evaluating evidence thresholds, and checking token containment...</p>
+            </div>
+            <div class="skeleton-lines">
+              <div class="skeleton-line skeleton-w-80"></div>
+              <div class="skeleton-line skeleton-w-60"></div>
+              <div class="skeleton-line skeleton-w-40"></div>
+            </div>
+          </div>
+
+          <!-- Result Container -->
+          <div id="result-container" class="results-wrapper hidden">
+            
+            <!-- Answer Card -->
+            <section class="card answer-card" id="answer-card">
+              <div class="answer-header">
+                <div class="answer-status-group">
+                  <span id="abstention-badge" class="badge badge-success">
+                    <span class="badge-icon">✓</span>
+                    <span id="abstention-text">Grounded Answer</span>
+                  </span>
+                  <span id="provider-badge" class="badge badge-neutral">
+                    <span id="provider-name-text">Mock Test-Double</span>
+                  </span>
+                </div>
+                <div class="answer-meta">
+                  <span id="latency-badge" class="meta-pill">⚡ <span id="latency-value">0.00</span> ms</span>
+                  <span id="retriever-badge" class="meta-pill">🔍 <span id="retriever-name-value">Lexical</span></span>
+                </div>
+              </div>
+
+              <div class="answer-body">
+                <h3 class="answer-heading">Answer:</h3>
+                <p id="answer-text" class="answer-content"></p>
+              </div>
+
+              <!-- Source Citations Area -->
+              <div class="citations-container" id="citations-container">
+                <div class="citation-group">
+                  <span class="citation-label">Cited Documents:</span>
+                  <div id="source-docs-list" class="citation-tags">
+                    <span class="tag tag-empty">None</span>
+                  </div>
+                </div>
+                <div class="citation-group">
+                  <span class="citation-label">Cited Chunks:</span>
+                  <div id="source-chunks-list" class="citation-tags">
+                    <span class="tag tag-empty">None</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Retrieved Context Chunks -->
+            <section class="card chunks-card" id="chunks-card">
+              <div class="card-header">
+                <div class="chunks-header-row">
+                  <div>
+                    <h3 class="chunks-title">Retrieved Context Chunks</h3>
+                    <p class="card-description">Ranked context segments extracted by the retrieval engine and supplied to the generator prompt.</p>
+                  </div>
+                  <span id="chunks-retrieved-count" class="badge badge-outline">3 Chunks</span>
+                </div>
+              </div>
+
+              <div id="chunks-list" class="chunks-list">
+                <!-- Dynamically populated via app.js -->
+              </div>
+            </section>
+
+          </div>
+
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- TAB PANEL 2: DOCUMENT KNOWLEDGE BASE & UPLOADS                -->
+        <!-- ============================================================= -->
+        <div id="panel-docs" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-docs-btn">
+          
+          <!-- Local Trust Notice -->
+          <div class="alert alert-info">
+            <div class="alert-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+            </div>
+            <div class="alert-content">
+              <span class="alert-title">Trusted Local Environment</span>
+              <p class="alert-description">
+                This application is designed for trusted local development. Uploaded documents are saved safely to <code>data/uploads/</code>, chunked, and indexed directly into the local SQLite database. Core benchmark baseline documents are protected from deletion to preserve benchmark reproducibility.
+              </p>
+            </div>
+          </div>
+
+          <!-- Document Upload Card -->
+          <section class="card upload-card">
+            <div class="card-header">
+              <h2>Upload & Ingest Document</h2>
+              <p class="card-description">Upload text (<code>.txt</code>), Markdown (<code>.md</code>), or PDF (<code>.pdf</code>) documents. Newly uploaded content is immediately searchable across both Lexical and Dense retrieval.</p>
+            </div>
+
+            <!-- Upload Dropzone / File Picker Form -->
+            <form id="upload-form" class="upload-form">
+              <div class="dropzone" id="upload-dropzone">
+                <input type="file" id="file-input" class="file-input" accept=".txt,.md,.pdf" />
+                <div class="dropzone-content">
+                  <div class="dropzone-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <p class="dropzone-text"><strong>Click to select a file</strong> or drag & drop here</p>
+                  <p class="dropzone-hint">Supported formats: Plain Text (<code>.txt</code>), Markdown (<code>.md</code>), PDF (<code>.pdf</code>) &bull; Maximum size: 5 MB</p>
+                </div>
+              </div>
+
+              <!-- Selected File Preview Bar (hidden until file selected) -->
+              <div id="file-selected-bar" class="file-selected-bar hidden">
+                <div class="file-info-group">
+                  <span class="file-icon">📄</span>
+                  <div>
+                    <span id="selected-filename" class="selected-filename">sample.txt</span>
+                    <span id="selected-filesize" class="selected-filesize">(0 KB)</span>
+                  </div>
+                </div>
+                <button type="button" id="remove-file-btn" class="btn btn-icon" title="Remove selected file">&times;</button>
+              </div>
+
+              <div class="upload-actions-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="overwrite-check" />
+                  <span>Overwrite existing document if identical content already exists</span>
+                </label>
+
+                <button type="submit" id="upload-submit-btn" class="btn btn-primary" disabled>
+                  <span class="btn-text">Upload & Ingest</span>
+                  <span class="btn-spinner hidden" id="upload-spinner"></span>
+                </button>
+              </div>
+            </form>
+
+            <!-- Upload Notification Banner -->
+            <div id="upload-alert" class="alert hidden" role="alert">
+              <div class="alert-icon" id="upload-alert-icon"></div>
+              <div class="alert-content">
+                <span class="alert-title" id="upload-alert-title"></span>
+                <p id="upload-alert-message" class="alert-description"></p>
+              </div>
+              <button type="button" id="upload-alert-dismiss" class="alert-close">&times;</button>
+            </div>
+          </section>
+
+          <!-- Document Library Section -->
+          <section class="card library-card">
+            <div class="card-header">
+              <div class="library-header-row">
+                <div>
+                  <h2>Knowledge Base Library</h2>
+                  <p class="card-description">All active documents and segmented chunks available for retrieval and grounding.</p>
+                </div>
+                <div class="library-controls">
+                  <input type="text" id="doc-search-input" class="search-input" placeholder="Filter documents..." />
+                  <button type="button" id="refresh-docs-btn" class="btn btn-secondary btn-sm" title="Refresh library">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M23 4v6h-6M1 20v-6h6"/>
+                      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    <span>Refresh</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Documents Table -->
+            <div class="table-responsive">
+              <table class="docs-table" id="docs-table">
+                <thead>
+                  <tr>
+                    <th>Document ID</th>
+                    <th>Title / Filename</th>
+                    <th>Type</th>
+                    <th>Chunks</th>
+                    <th>Ingested</th>
+                    <th class="text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="docs-table-body">
+                  <!-- Populated dynamically via app.js -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty Table Placeholder -->
+            <div id="docs-empty-state" class="empty-state hidden">
+              <p>No documents matching your search filter.</p>
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="delete-modal-title" class="modal-title">Delete Document</h3>
+          <button type="button" id="modal-close-btn" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this document from the knowledge base?</p>
+          <div class="delete-doc-preview">
+            <p><strong>ID:</strong> <span id="modal-doc-id" class="font-mono"></span></p>
+            <p><strong>Title:</strong> <span id="modal-doc-title"></span></p>
+            <p><strong>Chunks:</strong> <span id="modal-doc-chunks"></span></p>
+          </div>
+          <p class="modal-warning">
+            ⚠️ This will permanently remove the document, all associated chunks, cached embeddings, and full-text search entries from SQLite.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="modal-cancel-btn" class="btn btn-secondary">Cancel</button>
+          <button type="button" id="modal-confirm-delete-btn" class="btn btn-danger">
+            <span class="btn-text">Confirm Delete</span>
+            <span class="btn-spinner hidden" id="modal-spinner"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-container">
+        <p><strong>DAI-009 RAG Benchmark Engine</strong> &bull; Modernized Engine, Browser Interface & Dynamic Document Management (Phase 3)</p>
+        <p class="footer-note">Default mode operates deterministically and network-free. Real LLM/Embedding providers configurable via environment variables.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

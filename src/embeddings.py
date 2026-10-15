@@ -11,6 +11,7 @@ Provides:
 from __future__ import annotations
 
 import hashlib
+import os
 import re
 from abc import ABC, abstractmethod
 from typing import List, Optional
@@ -177,16 +178,120 @@ class SentenceTransformerEmbeddingModel(BaseEmbeddingModel):
         return embeddings.astype(np.float32)
 
 
+class OpenAIEmbeddingModel(BaseEmbeddingModel):
+    """
+    Production dense vector embedding model powered by OpenAI Embeddings API
+    or any OpenAI-compatible API endpoint (e.g. LiteLLM, Ollama, Azure, vLLM).
+
+    Uses standard-library urllib.request so it runs natively without requiring
+    compiled C/C++ or PyTorch dependencies (fully compatible with Python 3.14).
+    """
+
+    def __init__(
+        self,
+        model_name: str = "text-embedding-3-small",
+        api_key: Optional[str] = None,
+        base_url: Optional[str] = None,
+        dimension: int = 1536,
+        timeout: float = 30.0,
+    ) -> None:
+        self._model_name = model_name
+        self._api_key = api_key or os.environ.get("OPENAI_API_KEY")
+        self._base_url = base_url or os.environ.get("OPENAI_BASE_URL")
+        self._dim = dimension
+        self._timeout = timeout
+
+    @property
+    def dimension(self) -> int:
+        return self._dim
+
+    @property
+    def model_name(self) -> str:
+        return f"openai:{self._model_name}"
+
+    def encode(self, texts: List[str]) -> np.ndarray:
+        if not texts:
+            return np.empty((0, self._dim), dtype=np.float32)
+
+        import json
+        import urllib.request
+        import urllib.error
+
+        if not self._api_key:
+            raise EmbeddingModelUnavailableError(
+                "Missing OpenAI API key. Set OPENAI_API_KEY environment variable or pass api_key.\n"
+                "Or set use_test_double=True (or RAG_MODE=offline) to use the deterministic offline test double."
+            )
+
+        url = (self._base_url.rstrip("/") if self._base_url else "https://api.openai.com/v1") + "/embeddings"
+
+        clean_inputs = [t.strip() if t and t.strip() else " " for t in texts]
+
+        payload = {
+            "model": self._model_name,
+            "input": clean_inputs,
+        }
+
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {self._api_key}",
+            },
+            method="POST",
+        )
+
+        try:
+            with urllib.request.urlopen(req, timeout=self._timeout) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+        except Exception as e:
+            raise EmbeddingModelUnavailableError(
+                f"Failed to fetch embeddings from OpenAI-compatible endpoint '{url}': {e}"
+            ) from e
+
+        if "data" not in data or not isinstance(data["data"], list):
+            raise EmbeddingModelUnavailableError(
+                f"Invalid response from OpenAI embedding endpoint: missing 'data' array. Response: {data}"
+            )
+
+        sorted_items = sorted(data["data"], key=lambda x: x.get("index", 0))
+        vectors: List[np.ndarray] = []
+        for item in sorted_items:
+            emb = item.get("embedding", [])
+            vec = np.array(emb, dtype=np.float32)
+            vectors.append(vec)
+
+        if not vectors:
+            return np.empty((0, self._dim), dtype=np.float32)
+
+        matrix = np.array(vectors, dtype=np.float32)
+        if matrix.shape[1] != self._dim:
+            self._dim = matrix.shape[1]
+
+        # L2 normalize
+        norms = np.linalg.norm(matrix, axis=1, keepdims=True)
+        return matrix / np.maximum(norms, 1e-12)
+
+
 def get_embedding_model(
     model_name: Optional[str] = None,
+    provider: Optional[str] = None,
     use_test_double: bool = False,
+    api_key: Optional[str] = None,
+    base_url: Optional[str] = None,
+    dimension: Optional[int] = None,
 ) -> BaseEmbeddingModel:
     """
     Factory helper to instantiate an embedding model.
     
     Args:
-        model_name: Name of sentence-transformer model (default: all-MiniLM-L6-v2).
-        use_test_double: If True, uses the offline deterministic test double.
+        model_name: Name of model (default depends on provider).
+        provider: Provider identifier ('mock', 'test_double', 'openai', 'sentence_transformers').
+        use_test_double: If True, forces the offline deterministic test double.
+        api_key: Optional API key for API-based providers.
+        base_url: Optional base URL for API-based providers.
+        dimension: Optional expected dimension for API-based providers.
         
     Returns:
         BaseEmbeddingModel: Configured model instance.
@@ -194,5 +299,30 @@ def get_embedding_model(
     if use_test_double or model_name == "deterministic_test_double":
         return DeterministicTestDoubleEmbeddingModel()
 
-    target_name = model_name or "all-MiniLM-L6-v2"
-    return SentenceTransformerEmbeddingModel(model_name=target_name)
+    prov = (provider or os.environ.get("RAG_EMBEDDING_PROVIDER") or "").strip().lower()
+    mode = os.environ.get("RAG_MODE", "offline").strip().lower()
+
+    if not prov or prov in ("mock", "test_double", "deterministic") or (mode == "offline" and not provider and not model_name):
+        return DeterministicTestDoubleEmbeddingModel()
+
+    if prov in ("openai", "openai-compatible"):
+        target_name = model_name or os.environ.get("OPENAI_EMBEDDING_MODEL") or "text-embedding-3-small"
+        target_key = api_key or os.environ.get("OPENAI_API_KEY")
+        target_url = base_url or os.environ.get("OPENAI_BASE_URL")
+        target_dim = dimension or int(os.environ.get("OPENAI_EMBEDDING_DIM", "1536"))
+        return OpenAIEmbeddingModel(
+            model_name=target_name,
+            api_key=target_key,
+            base_url=target_url,
+            dimension=target_dim,
+        )
+
+    if prov in ("sentence_transformers", "sentence-transformers", "local"):
+        target_name = model_name or "all-MiniLM-L6-v2"
+        return SentenceTransformerEmbeddingModel(model_name=target_name)
+
+    # If model_name was provided without provider, default to sentence_transformers for backward compatibility
+    if model_name:
+        return SentenceTransformerEmbeddingModel(model_name=model_name)
+
+    raise ValueError(f"Unknown embedding provider: '{prov}'. Supported: 'mock', 'openai', 'sentence_transformers'.")

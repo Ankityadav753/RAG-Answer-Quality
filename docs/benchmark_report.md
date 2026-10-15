@@ -1,6 +1,6 @@
 # DAI-009: RAG Answer Quality Benchmark Report
 
-**Benchmark Execution Date**: 2026-10-11 23:03:46  
+**Benchmark Execution Date**: 2026-10-15 21:51:20  
 **Evaluation Scope**: 22 Ground-Truth Questions (19 Answerable, 3 Unanswerable/Abstention) across 11 Policy Documents.  
 **Retrieved Items per Query (Top-K)**: 3  
 
@@ -15,11 +15,11 @@
 | | **Precision@3** | **0.5790** | **0.2105** | Lexical |
 | **Retrieval Quality** (All Queries N=22) | **MRR (Overall)** | **0.8409** | **0.3939** | Lexical |
 | | **Precision@3 (Overall)** | **0.5000** | **0.1818** | Lexical |
-| **Answer Quality** | **Groundedness Score** (Heuristic) | **1.0000** | **1.0000** | Lexical |
+| **Answer Quality** | **Groundedness Score** (Heuristic) | **1.0000** | **1.0000** | Tie |
 | **Abstention Guardrails** | **Abstention Precision** | **1.0000** | **0.3333** | Lexical |
-| | **Abstention Recall** | **0.3333** | **0.6667** | Dense |
-| | **Abstention F1 Score** | **0.5000** | **0.4444** | Lexical |
-| **Performance** | **Mean Latency per Query** | **1.22 ms** | **0.50 ms** | Dense |
+| | **Abstention Recall** | **0.6667** | **0.6667** | Tie |
+| | **Abstention F1 Score** | **0.8000** | **0.4444** | Lexical |
+| **Performance** | **Mean Latency per Query** | **1.30 ms** | **0.70 ms** | Dense |
 
 ---
 
