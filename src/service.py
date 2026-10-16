@@ -58,6 +58,8 @@ class RAGService:
     def __init__(
         self,
         db_path: Optional[Union[str, Path]] = None,
+        docs_path: Optional[Union[str, Path]] = None,
+        upload_dir: Optional[Union[str, Path]] = None,
         retriever_type: Optional[str] = None,
         retriever: Optional[BaseRetriever] = None,
         generator: Optional[AnswerGenerator] = None,
@@ -68,6 +70,8 @@ class RAGService:
         settings: Settings = get_settings()
 
         self.db_path = Path(db_path).resolve() if db_path else settings.db_path
+        self.docs_path = Path(docs_path).resolve() if docs_path else settings.docs_path
+        self.upload_dir = Path(upload_dir).resolve() if upload_dir else settings.upload_dir
         self.top_k = top_k if top_k is not None else settings.top_k
 
         # 1. Initialize or configure Embedding Model (for dense retrieval)
@@ -132,7 +136,10 @@ class RAGService:
     def document_manager(self) -> DocumentManager:
         """Lazy-initialized DocumentManager instance bound to the service database."""
         if self._document_manager is None:
-            self._document_manager = DocumentManager(db_path=self.db_path)
+            self._document_manager = DocumentManager(
+                db_path=self.db_path,
+                upload_dir=self.upload_dir,
+            )
         return self._document_manager
 
     def invalidate_indices(self) -> None:
@@ -208,8 +215,8 @@ class RAGService:
             cursor.execute("SELECT COUNT(*) AS cnt FROM document_chunks;")
             count = cursor.fetchone()["cnt"]
 
-        if count == 0 and DEFAULT_DOCS_PATH.exists():
-            self.ingest(docs_path=DEFAULT_DOCS_PATH)
+        if count == 0 and self.docs_path.exists():
+            self.ingest(docs_path=self.docs_path)
 
     def ingest(
         self,
@@ -227,7 +234,7 @@ class RAGService:
             Dict[str, Any]: Ingestion summary.
         """
         summary = ingest_documents(
-            docs_path=docs_path or DEFAULT_DOCS_PATH,
+            docs_path=docs_path or self.docs_path,
             db_path=self.db_path,
         )
 

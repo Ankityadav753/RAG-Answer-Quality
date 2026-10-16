@@ -22,6 +22,11 @@ db/*.db-wal
 db/*.db-shm
 *.sqlite3
 
+# Runtime Uploaded Files
+data/uploads/*
+!data/uploads/.gitkeep
+
+
 # Operating System Files
 Thumbs.db
 ehthumbs.db

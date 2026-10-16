@@ -37,8 +37,9 @@ In **Phase 3**, **document upload, dynamic ingestion, and document management** 
 - **Database & Indexing**: SQLite 3 with native **FTS5** (Full-Text Search) and relational triggers
 - **Vector Operations**: NumPy (matrix multiplication and L2 normalization)
 - **Unified Engine**: `RAGService` connecting database, retrievers, generator, and source citations
-- **Testing Framework**: `pytest`, `unittest`, and `httpx` / Starlette `TestClient` (116 automated tests)
+- **Testing Framework**: `pytest`, `unittest`, and `httpx` / Starlette `TestClient` (125 automated tests)
 - **Data Serialization**: JSON & standard Markdown reports
+- **Deployment & Cloud**: Production-ready for **Render** (via `render.yaml` or Dockerless Python web service)
 
 ---
 
@@ -73,6 +74,7 @@ Rag-Answer-Quality/
 │   ├── app.css                  # Modern stylesheet with animations, tokens, and modal styles
 │   └── app.js                   # Client-side controller for async queries, uploads & deletion
 ├── tests/
+│   ├── test_deployment.py       # Render deployment readiness, PORT, 0.0.0.0 binding & env paths (9 tests)
 │   ├── test_document_management.py # Document upload, validation, parsing & deletion tests (19 tests)
 │   ├── test_api.py              # Web API & UI tests: endpoints, validation, abstention, static files (14 tests)
 │   ├── test_rag_service.py      # Integration tests for unified RAGService (5 tests)
@@ -88,12 +90,14 @@ Rag-Answer-Quality/
 │   ├── test_generator.py        # Generation tests: Grounding, deduplication, citations (11 tests)
 │   └── test_evaluator.py        # Evaluation tests: IR metrics, groundedness, persistence (9 tests)
 ├── docs/
+│   ├── render_deployment.md     # Production Render deployment guide and persistence notes
 │   ├── architecture.md          # Complete system architecture and Mermaid diagram
 │   ├── design_decisions.md      # Key design choices, trade-offs, and disclosures
 │   ├── demo_script.md           # Presentation script and demo checklist
 │   ├── benchmark_report.md      # Auto-generated comparative benchmark markdown report
 │   └── benchmark_results.json   # Machine-readable per-query evaluation metrics
 ├── .env.example                 # Environment variable template
+├── render.yaml                  # Declarative Render Blueprint specification
 ├── ask.py                       # Root CLI convenience entrypoint for asking questions
 ├── run_app.py                   # One-command launcher for the browser web application
 ├── run_benchmark.py             # CLI runner executing comparative benchmark
@@ -305,7 +309,7 @@ python run_benchmark.py
 
 ## 9. Running the Automated Test Suite
 
-Run all **116 automated tests** across all 14 test files using `pytest`:
+Run all **125 automated tests** across all 15 test files using `pytest`:
 
 ```powershell
 pytest -v
@@ -317,7 +321,31 @@ Or using Python's standard library `unittest`:
 python -m unittest discover -s tests -v
 ```
 
-All 116 tests execute in under 5 seconds with zero external network dependencies.
+All 125 tests execute in under 5 seconds with zero external network dependencies.
+
+---
+
+## 10. Production Deployment on Render
+
+The application is structured for deployment as a Web Service on [Render](https://render.com).
+
+### Deployment Settings Summary
+- **Runtime**: Python 3 (`PYTHON_VERSION=3.11.9`)
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `uvicorn src.app:app --host 0.0.0.0 --port $PORT` *(or `python run_app.py`)*
+- **Health Check Path**: `/health`
+- **Default Mode**: `RAG_MODE=offline` (deterministic, zero external API keys required to start)
+- **Declarative Blueprint**: Included at [`render.yaml`](render.yaml)
+
+### Important Note on SQLite and Upload Persistence
+Render's **free tier** uses ephemeral container filesystems:
+- **Ephemeral Filesystem**: When the free instance sleeps (after 15 minutes of inactivity) or redeploys, any runtime changes written to disk—including user-uploaded files in `data/uploads/` and SQLite database records—are reset.
+- **Automatic Re-initialization**: The 11 baseline policy documents in `data/sample_documents.json` are committed to Git. The application automatically re-initializes and re-ingests this sample corpus on startup whenever the database is fresh, ensuring the application remains functional immediately upon waking up.
+- **Durable Storage Option**: To persist uploaded documents and SQLite state across redeploys, upgrade to a paid Render plan (e.g. Starter tier) with a **Render Persistent Disk** mounted at `/var/data`, and configure:
+  - `RAG_DB_PATH=/var/data/rag_bench.db`
+  - `RAG_UPLOAD_DIR=/var/data/uploads`
+
+For detailed step-by-step deployment instructions, see [Render Deployment Guide](docs/render_deployment.md).
 
 
 

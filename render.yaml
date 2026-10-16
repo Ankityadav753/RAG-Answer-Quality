@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: rag-answer-quality
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn src.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: false
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: RAG_MODE
+        value: offline
+      - key: RAG_RETRIEVER_TYPE
+        value: lexical
+      - key: RAG_LLM_PROVIDER
+        value: mock
+      - key: RAG_EMBEDDING_PROVIDER
+        value: mock
+      - key: RAG_TOP_K
+        value: "3"

@@ -8,6 +8,7 @@ and persists them idempotently into the SQLite database.
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
@@ -18,7 +19,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 # Internal dependencies
-from db.database import DEFAULT_DB_PATH, get_db_connection, init_db
+from db.database import DEFAULT_DB_PATH, get_db_connection, get_db_path, init_db
 from src.chunker import chunk_text
 
 DEFAULT_DOCS_PATH: Path = PROJECT_ROOT / "data" / "sample_documents.json"
@@ -45,16 +46,21 @@ def ingest_documents(
     Ingest documents into SQLite database idempotently.
     
     Args:
-        docs_path: Path to sample_documents.json (defaults to data/sample_documents.json).
-        db_path: Path to SQLite DB file (defaults to db/rag_bench.db).
+        docs_path: Path to sample_documents.json (defaults to RAG_DOCS_PATH or data/sample_documents.json).
+        db_path: Path to SQLite DB file (defaults to RAG_DB_PATH or db/rag_bench.db).
         chunk_size: Maximum words per chunk.
         chunk_overlap: Word overlap between adjacent chunks.
         
     Returns:
         Dict[str, Any]: Ingestion summary metrics.
     """
-    target_docs = Path(docs_path).resolve() if docs_path else DEFAULT_DOCS_PATH
-    target_db = Path(db_path).resolve() if db_path else DEFAULT_DB_PATH
+    if docs_path:
+        target_docs = Path(docs_path).resolve()
+    else:
+        env_docs = os.environ.get("RAG_DOCS_PATH")
+        target_docs = Path(env_docs).resolve() if env_docs else DEFAULT_DOCS_PATH
+
+    target_db = get_db_path(db_path)
 
     # Ensure database schema is initialized if table doesn't exist yet
     init_db(target_db)

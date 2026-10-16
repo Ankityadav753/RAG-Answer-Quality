@@ -25,7 +25,7 @@ PROJECT_ROOT: Path = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from db.database import DEFAULT_DB_PATH, get_db_connection
+from db.database import DEFAULT_DB_PATH, get_db_connection, get_db_path
 from src.embeddings import (
     BaseEmbeddingModel,
     DeterministicTestDoubleEmbeddingModel,
@@ -85,7 +85,7 @@ class LexicalRetriever(BaseRetriever):
         db_path: Optional[Union[str, Path]] = None,
         use_fts: bool = True,
     ) -> None:
-        self.db_path = Path(db_path).resolve() if db_path else DEFAULT_DB_PATH
+        self.db_path = get_db_path(db_path)
         self.use_fts = use_fts
         self._ensure_fts_synced()
 
@@ -256,7 +256,7 @@ class DenseRetriever(BaseRetriever):
         db_path: Optional[Union[str, Path]] = None,
         embedding_model: Optional[BaseEmbeddingModel] = None,
     ) -> None:
-        self.db_path = Path(db_path).resolve() if db_path else DEFAULT_DB_PATH
+        self.db_path = get_db_path(db_path)
         # Default to offline deterministic test double if no model passed
         self.embedding_model = embedding_model or DeterministicTestDoubleEmbeddingModel()
 

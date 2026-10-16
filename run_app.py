@@ -19,8 +19,18 @@ import uvicorn
 
 
 def main() -> int:
-    default_host = os.environ.get("RAG_APP_HOST", "127.0.0.1")
-    default_port = int(os.environ.get("RAG_APP_PORT", "8000"))
+    port_env = os.environ.get("PORT") or os.environ.get("RAG_APP_PORT", "8000")
+    try:
+        default_port = int(port_env)
+    except ValueError:
+        default_port = 8000
+
+    # In cloud environments like Render, PORT is provided and the server must listen on 0.0.0.0.
+    # Locally, default to 127.0.0.1 unless RAG_APP_HOST is explicitly configured.
+    default_host = os.environ.get(
+        "RAG_APP_HOST",
+        "0.0.0.0" if os.environ.get("PORT") else "127.0.0.1",
+    )
 
     parser = argparse.ArgumentParser(
         description="Run DAI-009 RAG Answer Quality Web Application.",

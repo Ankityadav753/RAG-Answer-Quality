@@ -7,6 +7,7 @@ and schema initialization routines.
 
 from __future__ import annotations
 
+import os
 import sqlite3
 from contextlib import contextmanager
 from pathlib import Path
@@ -22,6 +23,9 @@ def get_db_path(custom_path: Optional[Union[str, Path]] = None) -> Path:
     """
     Resolve the SQLite database path and ensure its parent directory exists.
     
+    If custom_path is omitted, inspects the RAG_DB_PATH environment variable
+    before falling back to DEFAULT_DB_PATH.
+    
     Args:
         custom_path: Optional override for the database file path.
         
@@ -29,7 +33,8 @@ def get_db_path(custom_path: Optional[Union[str, Path]] = None) -> Path:
         Path: Resolved absolute path to the database file.
     """
     if custom_path is None:
-        target_path = DEFAULT_DB_PATH
+        env_db = os.environ.get("RAG_DB_PATH")
+        target_path = Path(env_db).resolve() if env_db else DEFAULT_DB_PATH
     elif isinstance(custom_path, Path):
         target_path = custom_path.resolve()
     else:
