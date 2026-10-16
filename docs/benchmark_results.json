@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-15T21:51:20.053050",
+  "timestamp": "2026-10-16T16:13:46.994327",
   "database_path": "C:\\Users\\ankit\\Desktop\\Rag-Answer-Quality\\db\\rag_bench.db",
   "top_k": 3,
   "configurations": {
@@ -16,16 +16,16 @@
       "mean_recall_at_k_all": 0.8636,
       "mrr_all": 0.8409,
       "mean_groundedness": 1.0,
-      "mean_latency_ms": 1.3,
+      "mean_latency_ms": 1.44,
       "abstention_metrics": {
-        "tp": 2,
+        "tp": 3,
         "fp": 0,
-        "fn": 1,
+        "fn": 0,
         "tn": 19,
         "precision": 1.0,
-        "recall": 0.6667,
-        "f1": 0.8,
-        "accuracy": 0.9545
+        "recall": 1.0,
+        "f1": 1.0,
+        "accuracy": 1.0
       },
       "per_query_results": [
         {
@@ -52,7 +52,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Each registered student may enroll a maximum of 4 concurrent devices through the hardware registration portal at netreg.university.edu. Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication.",
-          "latency_ms": 1.87
+          "latency_ms": 2.0
         },
         {
           "query_id": "Q-02",
@@ -78,7 +78,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "The Division of Advanced Research Computing operates the 'Titan-HPC' computing cluster, housed in the Turing Hall Data Center (Room DH-104). Student researchers must submit authorization form HPC-REQ-2026 co-signed by their faculty advisor to obtain access keys.",
-          "latency_ms": 1.27
+          "latency_ms": 1.38
         },
         {
           "query_id": "Q-03",
@@ -103,8 +103,8 @@
           "reciprocal_rank": 1.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus. The university's academic honesty policy is governed by code 'POLICY-AI-2026'.",
-          "latency_ms": 1.26
+          "answer_text": "The university's academic honesty policy is governed by code 'POLICY-AI-2026'. Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus.",
+          "latency_ms": 1.43
         },
         {
           "query_id": "Q-04",
@@ -130,7 +130,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "If informal resolution fails, Stage 2 permits the student to file a formal appeal to the Department Chair using petition form GR-APP-01 within 15 business days of the instructor's written response. Students wishing to contest a final posted course grade must follow a structured three-stage appeal process.",
-          "latency_ms": 1.21
+          "latency_ms": 1.34
         },
         {
           "query_id": "Q-05",
@@ -155,8 +155,8 @@
           "reciprocal_rank": 1.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "Access is restricted to students who have completed the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person equipment walkthrough. The student MakerSpace is situated in the Lovelace Engineering Center, Room LC-205.",
-          "latency_ms": 1.12
+          "answer_text": "Access is restricted to students who have completed the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person equipment walkthrough. Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication.",
+          "latency_ms": 1.28
         },
         {
           "query_id": "Q-06",
@@ -182,7 +182,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Undergraduates receive a pooled cloud storage quota of 50 GB across email and associated cloud drives. Undergraduate students in good standing may borrow up to 20 physical books concurrently from the Babbage Memorial Library collection for a standard loan period of 28 days per item, renewable up to two times online if no hold has been placed by another patron.",
-          "latency_ms": 1.13
+          "latency_ms": 1.23
         },
         {
           "query_id": "Q-07",
@@ -208,7 +208,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "No assignment will be accepted more than 72 hours (3 calendar days) after the original submission deadline; work submitted past 72 hours automatically receives a mark of zero. Submissions completed after this 15-minute window are assessed a late penalty of 10% of the total possible marks for each 24-hour period (or fraction thereof) beyond the deadline.",
-          "latency_ms": 1.14
+          "latency_ms": 1.3
         },
         {
           "query_id": "Q-08",
@@ -233,8 +233,8 @@
           "reciprocal_rank": 1.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "Student email accounts that remain inactive with zero logins for 180 consecutive days are automatically flagged for deactivation. Inbound and outbound email attachments are capped at a maximum of 35 MB per transmission; files exceeding 35 MB must be shared via university OneDrive or Google Drive download links.",
-          "latency_ms": 1.14
+          "answer_text": "Student email accounts that remain inactive with zero logins for 180 consecutive days are automatically flagged for deactivation. After a 30-day grace notification sent to the student's secondary emergency contact, unaccessed accounts are permanently deleted.",
+          "latency_ms": 2.26
         },
         {
           "query_id": "Q-09",
@@ -259,8 +259,8 @@
           "reciprocal_rank": 1.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "Passwords must contain a minimum of 14 characters, incorporating at least one uppercase letter, one lowercase letter, one numeric digit, and one special symbol. Advanced fabrication machinery, specifically the CNC mill and 100W CO2 laser cutter, requires specialized Red Badge certification and requires a minimum 2-person buddy system to be active in the room at all times during operation.",
-          "latency_ms": 1.44
+          "answer_text": "Passwords must contain a minimum of 14 characters, incorporating at least one uppercase letter, one lowercase letter, one numeric digit, and one special symbol. University IT Security mandates that all student and employee accounts adhere to enterprise password standards.",
+          "latency_ms": 1.55
         },
         {
           "query_id": "Q-10",
@@ -286,7 +286,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Overdue technology checkouts incur an overdue penalty fee of $15.00 per day, capped at a maximum equipment replacement fee of $1,200. In addition to books, the library Circulation Desk provides short-term technology loans, including Dell XPS 15 laptops, graphing calculators, and iPad Pro tablets.",
-          "latency_ms": 1.91
+          "latency_ms": 1.4
         },
         {
           "query_id": "Q-11",
@@ -312,7 +312,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "EV charging is complimentary for the initial 4 hours for vehicles holding a valid semester permit; an overtime occupancy fee of $5.00 per hour applies thereafter to promote turnover. Semester permit rates are established as: Zone A (Resident Students) at $280 per semester, Zone B (Commuter Students) at $190 per semester, and Motorcycle permits at $60 per semester.",
-          "latency_ms": 1.35
+          "latency_ms": 1.32
         },
         {
           "query_id": "Q-12",
@@ -338,7 +338,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Parking violation citations must be paid or formally contested online at parking.university.edu/appeal within 14 calendar days of citation issuance; citations not addressed within 14 days incur a $25 late administrative charge. Emergency late withdrawals ('WE') beyond Week 8 require petition form ACAD-PET-08 approved by the Academic Affairs Board, backed by certified medical documentation submitted within 14 calendar days of the qualifying event.",
-          "latency_ms": 1.27
+          "latency_ms": 1.3
         },
         {
           "query_id": "Q-13",
@@ -364,7 +364,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Courses dropped by this deadline qualify for a 100% tuition refund and will not appear on the official transcript. Students may adjust their semester schedule without academic or financial penalty through the official Add/Drop deadline, which falls at 11:59 PM on Friday of Week 2 of the academic semester.",
-          "latency_ms": 1.19
+          "latency_ms": 1.33
         },
         {
           "query_id": "Q-14",
@@ -390,7 +390,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "A first violation results in an automatic score of zero on the affected assignment, along with mandatory completion of the non-credit Academic Integrity Workshop (AIW-01) within 21 calendar days. All academic assignments, problem sets, and laboratory write-ups must be submitted through the university Canvas LMS portal by the time designated on the course syllabus.",
-          "latency_ms": 1.13
+          "latency_ms": 1.26
         },
         {
           "query_id": "Q-15",
@@ -416,7 +416,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Multi-Factor Authentication (MFA) is compulsory for all logins to university systems, delivered exclusively via Duo Mobile push notifications or physical hardware security keys (FIDO2/YubiKey). SMS text message verification was deprecated in August 2025 due to SIM-swapping vulnerabilities.",
-          "latency_ms": 1.13
+          "latency_ms": 1.29
         },
         {
           "query_id": "Q-16",
@@ -441,8 +441,8 @@
           "reciprocal_rank": 1.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "The operation of personal wireless routers, unauthorized access points, rogue DHCP servers, or packet interception hardware (such as Wi-Fi Pineapples) in residence halls is strictly prohibited and subject to immediate network port suspension.",
-          "latency_ms": 1.08
+          "answer_text": "The operation of personal wireless routers, unauthorized access points, rogue DHCP servers, or packet interception hardware (such as Wi-Fi Pineapples) in residence halls is strictly prohibited and subject to immediate network port suspension. Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication.",
+          "latency_ms": 1.26
         },
         {
           "query_id": "Q-17",
@@ -468,7 +468,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus. A second violation results in an automatic course failure with an 'F' grade and immediate referral to the Faculty Honor Council for disciplinary probation or suspension proceedings.",
-          "latency_ms": 1.11
+          "latency_ms": 1.24
         },
         {
           "query_id": "Q-18",
@@ -494,7 +494,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Undergraduate students in good standing may borrow up to 20 physical books concurrently from the Babbage Memorial Library collection for a standard loan period of 28 days per item, renewable up to two times online if no hold has been placed by another patron. In addition to books, the library Circulation Desk provides short-term technology loans, including Dell XPS 15 laptops, graphing calculators, and iPad Pro tablets.",
-          "latency_ms": 1.15
+          "latency_ms": 1.31
         },
         {
           "query_id": "Q-19",
@@ -520,7 +520,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Advanced fabrication machinery, specifically the CNC mill and 100W CO2 laser cutter, requires specialized Red Badge certification and requires a minimum 2-person buddy system to be active in the room at all times during operation.",
-          "latency_ms": 1.07
+          "latency_ms": 2.37
         },
         {
           "query_id": "Q-20",
@@ -541,10 +541,10 @@
           "precision_at_k": 0.0,
           "recall_at_k": 0.0,
           "reciprocal_rank": 0.0,
-          "is_abstention": false,
+          "is_abstention": true,
           "groundedness_score": 1.0,
-          "answer_text": "Students may adjust their semester schedule without academic or financial penalty through the official Add/Drop deadline, which falls at 11:59 PM on Friday of Week 2 of the academic semester.",
-          "latency_ms": 1.09
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 1.4
         },
         {
           "query_id": "Q-21",
@@ -568,7 +568,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 1.34
+          "latency_ms": 1.22
         },
         {
           "query_id": "Q-22",
@@ -592,7 +592,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 2.18
+          "latency_ms": 1.27
         }
       ]
     },
@@ -609,16 +609,16 @@
       "mean_recall_at_k_all": 0.5,
       "mrr_all": 0.3939,
       "mean_groundedness": 1.0,
-      "mean_latency_ms": 0.7,
+      "mean_latency_ms": 0.73,
       "abstention_metrics": {
-        "tp": 2,
-        "fp": 4,
-        "fn": 1,
-        "tn": 15,
+        "tp": 3,
+        "fp": 6,
+        "fn": 0,
+        "tn": 13,
         "precision": 0.3333,
-        "recall": 0.6667,
-        "f1": 0.4444,
-        "accuracy": 0.7727
+        "recall": 1.0,
+        "f1": 0.5,
+        "accuracy": 0.7273
       },
       "per_query_results": [
         {
@@ -645,7 +645,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Each registered student may enroll a maximum of 4 concurrent devices through the hardware registration portal at netreg.university.edu. The operation of personal wireless routers, unauthorized access points, rogue DHCP servers, or packet interception hardware (such as Wi-Fi Pineapples) in residence halls is strictly prohibited and subject to immediate network port suspension.",
-          "latency_ms": 3.99
+          "latency_ms": 3.27
         },
         {
           "query_id": "Q-02",
@@ -671,7 +671,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "The Division of Advanced Research Computing operates the 'Titan-HPC' computing cluster, housed in the Turing Hall Data Center (Room DH-104). Student researchers must submit authorization form HPC-REQ-2026",
-          "latency_ms": 0.52
+          "latency_ms": 0.64
         },
         {
           "query_id": "Q-03",
@@ -696,8 +696,8 @@
           "reciprocal_rank": 1.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus. The university's academic honesty policy is governed by code 'POLICY-AI-2026'.",
-          "latency_ms": 0.52
+          "answer_text": "The university's academic honesty policy is governed by code 'POLICY-AI-2026'. Generative artificial intelligence systems (including large language models and code generators) may only be used for course assignments when explicitly permitted in writing by the instructor's syllabus.",
+          "latency_ms": 0.79
         },
         {
           "query_id": "Q-04",
@@ -720,10 +720,10 @@
           "precision_at_k": 0.0,
           "recall_at_k": 0.0,
           "reciprocal_rank": 0.0,
-          "is_abstention": false,
+          "is_abstention": true,
           "groundedness_score": 1.0,
-          "answer_text": "Student researchers must submit authorization form HPC-REQ-2026 co-signed by their faculty advisor to obtain access keys. exceeding 35 MB must be shared via university OneDrive or Google Drive download links.",
-          "latency_ms": 0.38
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.73
         },
         {
           "query_id": "Q-05",
@@ -748,8 +748,8 @@
           "reciprocal_rank": 1.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "Access is restricted to students who have completed the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person equipment walkthrough. The student MakerSpace is situated in the Lovelace Engineering Center, Room LC-205.",
-          "latency_ms": 0.49
+          "answer_text": "Access is restricted to students who have completed the online Green Badge Safety Training module (ENGR-SAFE-101) and an in-person equipment walkthrough. Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication.",
+          "latency_ms": 0.85
         },
         {
           "query_id": "Q-06",
@@ -775,7 +775,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Student researchers must submit authorization form HPC-REQ-2026",
-          "latency_ms": 0.44
+          "latency_ms": 0.61
         },
         {
           "query_id": "Q-07",
@@ -801,7 +801,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "No assignment will be accepted more than 72 hours (3 calendar days) after the original submission deadline; work submitted past 72 hours automatically receives a mark of zero. Submissions completed after this 15-minute window are assessed a late penalty of 10% of the total possible marks for each 24-hour period (or fraction thereof) beyond the deadline.",
-          "latency_ms": 0.53
+          "latency_ms": 0.73
         },
         {
           "query_id": "Q-08",
@@ -827,7 +827,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Student email accounts that remain inactive with zero logins for 180 consecutive days are automatically flagged for deactivation. After a 30-day grace notification sent to the student's secondary emergency contact, unaccessed accounts are permanently deleted.",
-          "latency_ms": 0.5
+          "latency_ms": 0.64
         },
         {
           "query_id": "Q-09",
@@ -852,8 +852,8 @@
           "reciprocal_rank": 0.0,
           "is_abstention": false,
           "groundedness_score": 1.0,
-          "answer_text": "Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication. Requests for medical extensions must include a verified clinic note and be submitted through the student portal within 48 hours of the deadline.",
-          "latency_ms": 0.5
+          "answer_text": "Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise security with 802.1X authentication.",
+          "latency_ms": 0.63
         },
         {
           "query_id": "Q-10",
@@ -879,7 +879,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Overdue technology checkouts incur an overdue penalty fee of $15.00 per day, capped at a maximum equipment replacement fee of $1,200.",
-          "latency_ms": 0.43
+          "latency_ms": 0.58
         },
         {
           "query_id": "Q-11",
@@ -902,10 +902,10 @@
           "precision_at_k": 0.0,
           "recall_at_k": 0.0,
           "reciprocal_rank": 0.0,
-          "is_abstention": false,
+          "is_abstention": true,
           "groundedness_score": 1.0,
-          "answer_text": "Legitimate grounds for appeal are restricted to mathematical calculation errors, deviations from published grading rubrics, or proven bias; disagreement with pedagogical grading standards does not constitute valid grounds.",
-          "latency_ms": 0.44
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.59
         },
         {
           "query_id": "Q-12",
@@ -931,7 +931,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Parking violation citations must be paid or formally contested online at parking.university.edu/appeal within 14 calendar days of citation issuance; citations not addressed within 14 days incur a $25 late administrative charge. If informal resolution fails, Stage 2 permits the student to file a formal appeal to the Department Chair using petition form GR-APP-01 within 15 business days of the instructor's written response.",
-          "latency_ms": 0.5
+          "latency_ms": 0.65
         },
         {
           "query_id": "Q-13",
@@ -957,7 +957,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 0.44
+          "latency_ms": 0.59
         },
         {
           "query_id": "Q-14",
@@ -983,7 +983,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "All academic assignments, problem sets, and laboratory write-ups must be submitted through the university Canvas LMS portal by the time designated on the course syllabus.",
-          "latency_ms": 0.41
+          "latency_ms": 0.53
         },
         {
           "query_id": "Q-15",
@@ -1009,7 +1009,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "SMS text message verification was deprecated in August 2025 due to SIM-swapping vulnerabilities.",
-          "latency_ms": 0.52
+          "latency_ms": 0.45
         },
         {
           "query_id": "Q-16",
@@ -1035,7 +1035,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 0.41
+          "latency_ms": 0.49
         },
         {
           "query_id": "Q-17",
@@ -1061,7 +1061,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 0.68
+          "latency_ms": 0.56
         },
         {
           "query_id": "Q-18",
@@ -1087,7 +1087,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 0.92
+          "latency_ms": 0.54
         },
         {
           "query_id": "Q-19",
@@ -1113,7 +1113,7 @@
           "is_abstention": false,
           "groundedness_score": 1.0,
           "answer_text": "Advanced fabrication machinery, specifically the CNC mill and 100W CO2 laser cutter, requires specialized Red Badge certification and requires a minimum 2-person buddy system to be active in the room at all times during operation.",
-          "latency_ms": 1.15
+          "latency_ms": 0.59
         },
         {
           "query_id": "Q-20",
@@ -1134,10 +1134,10 @@
           "precision_at_k": 0.0,
           "recall_at_k": 0.0,
           "reciprocal_rank": 0.0,
-          "is_abstention": false,
+          "is_abstention": true,
           "groundedness_score": 1.0,
-          "answer_text": "If the student demonstrates procedural error or demonstrable grading bias, Stage 3 allows an escalation to the Dean's Academic Review Board within 7 business days of the Department Chair's ruling.",
-          "latency_ms": 0.81
+          "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
+          "latency_ms": 0.56
         },
         {
           "query_id": "Q-21",
@@ -1161,7 +1161,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 0.47
+          "latency_ms": 0.44
         },
         {
           "query_id": "Q-22",
@@ -1185,7 +1185,7 @@
           "is_abstention": true,
           "groundedness_score": 1.0,
           "answer_text": "I cannot find sufficient information in the provided documentation to answer this question.",
-          "latency_ms": 0.44
+          "latency_ms": 0.62
         }
       ]
     }

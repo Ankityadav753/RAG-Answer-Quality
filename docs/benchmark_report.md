@@ -1,6 +1,6 @@
 # DAI-009: RAG Answer Quality Benchmark Report
 
-**Benchmark Execution Date**: 2026-10-15 21:51:20  
+**Benchmark Execution Date**: 2026-10-16 16:13:46  
 **Evaluation Scope**: 22 Ground-Truth Questions (19 Answerable, 3 Unanswerable/Abstention) across 11 Policy Documents.  
 **Retrieved Items per Query (Top-K)**: 3  
 
@@ -17,9 +17,9 @@
 | | **Precision@3 (Overall)** | **0.5000** | **0.1818** | Lexical |
 | **Answer Quality** | **Groundedness Score** (Heuristic) | **1.0000** | **1.0000** | Tie |
 | **Abstention Guardrails** | **Abstention Precision** | **1.0000** | **0.3333** | Lexical |
-| | **Abstention Recall** | **0.6667** | **0.6667** | Tie |
-| | **Abstention F1 Score** | **0.8000** | **0.4444** | Lexical |
-| **Performance** | **Mean Latency per Query** | **1.30 ms** | **0.70 ms** | Dense |
+| | **Abstention Recall** | **1.0000** | **1.0000** | Tie |
+| | **Abstention F1 Score** | **1.0000** | **0.5000** | Lexical |
+| **Performance** | **Mean Latency per Query** | **1.44 ms** | **0.73 ms** | Dense |
 
 ---
 

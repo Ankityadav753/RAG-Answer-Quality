@@ -151,6 +151,80 @@ def are_sentences_overlapping(s1: str, s2: str, overlap_token_thresh: float = 0.
     return False
 
 
+# Expanded stop words to include question phrasing, conversational fluff, and auxiliary modals
+MOCK_STOPWORDS: set[str] = {
+    "what", "is", "the", "for", "and", "in", "to", "of", "a", "an",
+    "are", "do", "how", "on", "can", "i", "my", "if", "or", "which",
+    "where", "when", "who", "whom", "will", "would", "at", "by", "from",
+    "it", "its", "this", "that", "these", "those", "there", "has", "have", "had",
+    "be", "been", "being", "with", "as", "about", "must", "should", "could", "all", "each",
+    "so", "no", "not", "any", "then", "into", "up", "out", "per", "use", "used", "using",
+    "tell", "me", "give", "explain", "describe", "show", "please", "does", "did", "also",
+    "many", "much",
+}
+
+# Generic words common in policy documentation that should not alone qualify as specific topic matches
+MOCK_GENERIC_WORDS: set[str] = {
+    "student", "students", "university", "campus", "policy", "policies",
+    "academic", "service", "services", "rule", "rules", "system", "systems",
+    "program", "programs", "form", "forms", "time", "day", "days", "hour", "hours",
+    "total", "number", "amount", "rate", "fee", "cost",
+}
+
+# Domain semantic aliases for institutional policy and technical terminology
+MOCK_SEMANTIC_ALIASES: dict[str, set[str]] = {
+    "measure": {"standard", "mandate", "rule", "policy", "requirement", "protocol", "guideline", "procedure", "control"},
+    "measures": {"standards", "mandates", "rules", "policies", "requirements", "protocols", "guidelines", "procedures", "controls"},
+    "standard": {"measure", "mandate", "rule", "policy", "requirement", "protocol", "guideline", "procedure", "control"},
+    "standards": {"measures", "mandates", "rules", "policies", "requirements", "protocols", "guidelines", "procedures", "controls"},
+    "mandate": {"measure", "standard", "rule", "policy", "requirement"},
+    "mandates": {"measures", "standards", "rules", "policies", "requirements"},
+    "organization": {"university", "enterprise", "institution", "department", "division"},
+    "organizations": {"universities", "enterprises", "institutions", "departments"},
+    "enterprise": {"organization", "university", "institution"},
+    "enterprises": {"organizations", "universities", "institutions"},
+    "protect": {"security", "secure", "safeguard", "defend", "protection"},
+    "protects": {"securities", "secures", "safeguards", "defends"},
+    "protection": {"security", "secure", "protect", "safeguard"},
+    "security": {"secure", "protect", "protection", "safeguard", "defend"},
+    "secure": {"security", "protect", "protection", "safeguard", "defend"},
+    "data": {"information", "account", "accounts", "credential", "credentials", "record", "records"},
+    "information": {"data", "record", "records"},
+    "wifi": {"wireless", "wpa3", "network", "ssid"},
+    "wi-fi": {"wireless", "wpa3", "network", "ssid"},
+    "wireless": {"wifi", "wi-fi", "wpa3", "network", "ssid"},
+    "network": {"wifi", "wi-fi", "wireless", "ssid"},
+}
+
+
+def _normalize_token(tok: str) -> str:
+    """Normalize token by lowercasing and stripping non-root plural suffixes."""
+    t = tok.lower()
+    if len(t) > 3 and t.endswith("s") and not t.endswith("ss"):
+        return t[:-1]
+    return t
+
+
+def _extract_tokens(text: str) -> set[str]:
+    """
+    Extract normalized tokens including subwords from hyphenated or compound terms.
+    e.g. 'wpa3-enterprise' -> {'wpa3-enterprise', 'wpa3', 'enterprise'}
+    """
+    raw_words = re.findall(r"\b[A-Za-z0-9_-]+\b", text.lower())
+    tokens: set[str] = set()
+    for w in raw_words:
+        cleaned_w = w.strip("._-")
+        if not cleaned_w:
+            continue
+        tokens.add(_normalize_token(cleaned_w))
+        parts = re.split(r"[-_/.]", cleaned_w)
+        if len(parts) > 1:
+            for p in parts:
+                if len(p) >= 2:
+                    tokens.add(_normalize_token(p))
+    return tokens
+
+
 class DeterministicMockLLMProvider(BaseLLMProvider):
     """
     Deterministic offline test-double provider.
@@ -176,24 +250,18 @@ class DeterministicMockLLMProvider(BaseLLMProvider):
         if not context or "[No relevant context chunks retrieved]" in context:
             return ABSTENTION_MESSAGE
 
-        def _norm(tok: str) -> str:
-            tok = tok.lower()
-            if len(tok) > 3 and tok.endswith("s"):
-                return tok[:-1]
-            return tok
-
-        # Clean query tokens
-        q_tokens = re.findall(r"\b[A-Za-z0-9_-]+\b", query.lower())
-        stopwords = {
-            "what", "is", "the", "for", "and", "in", "to", "of", "a", "an",
-            "are", "do", "how", "on", "can", "i", "my", "if", "or", "which",
-            "where", "when", "who", "whom", "will", "would", "at", "by", "from"
-        }
+        q_tokens = _extract_tokens(query)
         content_tokens = {
-            _norm(t)
-            for t in q_tokens
-            if t not in stopwords and len(t) >= 2
+            t for t in q_tokens
+            if t not in MOCK_STOPWORDS and len(t) >= 2
         }
+
+        # Expand content tokens with domain aliases
+        expanded_tokens = set(content_tokens)
+        for t in content_tokens:
+            if t in MOCK_SEMANTIC_ALIASES:
+                for alias in MOCK_SEMANTIC_ALIASES[t]:
+                    expanded_tokens.add(_normalize_token(alias))
 
         # Break context into sentences and blocks cleanly
         # Split on sentence ending punctuation followed by space OR on newlines/paragraph breaks
@@ -205,6 +273,9 @@ class DeterministicMockLLMProvider(BaseLLMProvider):
             if norm_b:
                 sentences.append(norm_b)
 
+        # Core topic tokens (content tokens excluding generic institutional words)
+        specific_query_tokens = {t for t in content_tokens if t not in MOCK_GENERIC_WORDS}
+
         # Determine minimum required token overlap threshold
         # For short queries (<=2 content words), require at least 1 match.
         # For typical queries (>=3 content words), require at least 2 distinct matching words
@@ -214,13 +285,20 @@ class DeterministicMockLLMProvider(BaseLLMProvider):
         # Score sentences by token overlap with query
         scored_sentences: List[tuple[int, str]] = []
         for s in sentences:
-            s_tokens = {
-                _norm(t)
-                for t in re.findall(r"\b[A-Za-z0-9_-]+\b", s.lower())
-            }
-            overlap = len(content_tokens.intersection(s_tokens))
-            if overlap >= min_overlap:
-                scored_sentences.append((overlap, s))
+            s_tokens = _extract_tokens(s)
+            overlap = expanded_tokens.intersection(s_tokens)
+
+            # A sentence qualifies as evidence only if:
+            # 1. Total overlap count meets the required threshold.
+            # 2. If the query contained specific topic keywords, at least one non-generic
+            #    topic keyword (or its semantic alias) is matched, avoiding false positive
+            #    matching on background administrative terms alone.
+            has_specific = bool(overlap.intersection(expanded_tokens - MOCK_GENERIC_WORDS)) if specific_query_tokens else True
+
+            if len(overlap) >= min_overlap and has_specific:
+                exact_overlap = content_tokens.intersection(s_tokens)
+                score = len(overlap) + len(exact_overlap)
+                scored_sentences.append((score, s))
 
         # If zero sentences meet the evidence threshold, abstain
         if not scored_sentences:

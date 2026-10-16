@@ -100,6 +100,90 @@ class TestAnswerGenerator(unittest.TestCase):
         self.assertEqual(res.source_chunk_ids, [])
         self.assertEqual(res.source_doc_ids, [])
 
+    def test_security_measures_with_retrieved_evidence_generates_answer(self) -> None:
+        """
+        Regression test for live Render issue:
+        'What security measures should an organization use to protect its data?'
+        must generate an answer when DOC-IT-004 evidence is present, not abstain.
+        """
+        chunk = RetrievalResult(
+            chunk_id="DOC-IT-004_chk_00",
+            document_id="DOC-IT-004",
+            content=(
+                "University IT Security mandates that all student and employee accounts adhere to "
+                "enterprise password standards. Passwords must be at least 14 characters long and "
+                "include numbers and special characters. Multi-Factor Authentication (MFA) is compulsory "
+                "for all logins to university systems, utilizing hardware security keys or authenticator "
+                "mobile push notifications. SMS-based authentication is explicitly disallowed due to known "
+                "SIM-swapping vulnerabilities."
+            ),
+            score=0.78,
+            rank=1,
+        )
+
+        res = self.generator.generate(
+            query="What security measures should an organization use to protect its data?",
+            retrieved_chunks=[chunk],
+        )
+
+        self.assertFalse(res.is_abstention, "Query should not abstain when evidence is present")
+        self.assertNotIn(ABSTENTION_MESSAGE, res.answer)
+        self.assertIn("DOC-IT-004_chk_00", res.source_chunk_ids)
+        self.assertIn("DOC-IT-004", res.source_doc_ids)
+        # Check that answer contains key facts from the context
+        self.assertTrue(
+            "password standards" in res.answer.lower() or "multi-factor authentication" in res.answer.lower(),
+            f"Expected key security facts in answer, got: {res.answer}",
+        )
+
+    def test_hyphenated_technical_terms_subword_matching(self) -> None:
+        """
+        Regression test:
+        Queries using 'WPA3' must match chunks containing hyphenated terms like 'WPA3-Enterprise'.
+        """
+        chunk = RetrievalResult(
+            chunk_id="DOC-IT-001_chk_00",
+            document_id="DOC-IT-001",
+            content="Students and faculty must connect to the primary SSID named 'Campus-Secure-5G', which utilizes WPA3-Enterprise.",
+            score=0.88,
+            rank=1,
+        )
+
+        queries = [
+            "What is WPA3?",
+            "Tell me about WPA3 security",
+            "WPA3 wireless security",
+        ]
+
+        for q in queries:
+            res = self.generator.generate(query=q, retrieved_chunks=[chunk])
+            self.assertFalse(res.is_abstention, f"Query '{q}' should not abstain on WPA3-Enterprise chunk")
+            self.assertIn("WPA3-Enterprise", res.answer)
+            self.assertEqual(res.source_chunk_ids, ["DOC-IT-001_chk_00"])
+
+    def test_unanswerable_query_with_generic_word_overlap_abstains(self) -> None:
+        """
+        Regression test:
+        An unanswerable query with generic administrative words ('students', 'hours', 'rate')
+        must NOT produce a false-positive answer when retrieved chunk only contains incidental generic terms.
+        """
+        chunk = RetrievalResult(
+            chunk_id="DOC-ACAD-001_chk_00",
+            document_id="DOC-ACAD-001",
+            content="Students must maintain continuous registration each semester. Full-time students must enroll in at least 12 credit hours per semester.",
+            score=0.25,
+            rank=1,
+        )
+
+        res = self.generator.generate(
+            query="What is the per-diem meal reimbursement rate for graduate students presenting research papers at academic conferences?",
+            retrieved_chunks=[chunk],
+        )
+
+        self.assertTrue(res.is_abstention, "Query without meal reimbursement evidence must abstain")
+        self.assertEqual(res.answer, ABSTENTION_MESSAGE)
+        self.assertEqual(res.source_chunk_ids, [])
+
     def test_source_attribution_and_deduplication(self) -> None:
         """Verify source chunk and document IDs are preserved and deduplicated."""
         chunks = [
